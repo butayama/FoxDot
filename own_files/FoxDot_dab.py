@@ -76,9 +76,9 @@ def use_synth_def(action):
 
 def runit(synth_item):
     # for synth_x in synth_defs.items():
-    p1 >> synth_defs['noise']([0, 2, 4, 5, 7, 9, 10])
+    # p1 >> synth_defs['noise']([0, 2, 4, 5, 7, 9, 10])
     # p1 >> synth_defs['noise']([0, 2, 4, 5, 7, 9, 10]).stop(4)
-    # p2 >> synth_defs['dab']([0, 2, 4, 5, 7, 9, 10])
+    p2 >> synth_defs['dab']([0, 2, 4, 5, 7, 9, 10])
     # p2 >> synth_defs['dab']([0, 2, 4, 5, 7, 9, 10]).stop(4)
 
     # p1 >> synth_defs[synth_x[0]]([0, 2, 4, 5, 7, 9, 10]).stop(4)
