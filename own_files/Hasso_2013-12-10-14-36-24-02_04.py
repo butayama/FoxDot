@@ -73,12 +73,6 @@ b7.stop()
 b8.stop()
 b9.stop()
 
-var.chords = var([0,4,7,3],4)
-var.chords = var([0,1,5,3],4)
-var.chords = var([0],1)
-
-b1 >> pluck(var.chords + [0, 2, 4], dur=PDur([3,5,7],8))
-b2 >> bass(var.chords, dur=[1/2,1/2,1/4])
 
 b1 >> feel(PTri(var([2,8,5],8,4)), oct=5,dur=[1,0.5,1,0.5,1,1], rate=((0.5,0.2),),pan=((-0.5,0.5),), delay=(0,0.15), amp=[5,2,4,3,2,1])
 b2 >> blip([0,2,4,0,2,4,2], oct=4,dur=[1,0.5,1,1,0.5], rate=((0.9,1),),pan=((0,0.5),), delay=(0,0.25))
@@ -114,35 +108,7 @@ e=(PEuclid2(7,12,'x', '-'))
 c5 >> play(e)
 
 f=(PEuclid2(3,7,'o', 'x'))
-
-
-b=(PEuclid2(7,15,'a', 'b'))
-p3 >> play(b)
-
-d1.stop()
-d2.stop()
-d3.stop()
-d4.stop()
-d5.stop()
-d6.stop()
-d7.stop()
-d8.stop()
-d9.stop()
-
-d1 >> play("(a-2-b-c-dx3xe-**f-+g!-h1)(-o-x)", dur=1, sample=[0], room=0.9, verb=0.2, delay=(0,0.25))
-d1.stop()
-
-d2 >> play("{a--bxxc==d++e--f**gooh}(x-o-o)", dur=1, room=0.9, sample=[1], verb=0.2, delay=(0,0.25))
-d2.stop()
-
-d3 >> play("x-o-o{abcdefgh}(2x3x-**-+!-1)(x-o o[xo])", dur=1, sample=[0], room=0.9, verb=0.2, delay=(0,0.25))
-d3.stop()
-
-d4 >> pluck(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(16), dur=PDur([5,2,3],8), oct=4, room=0.7, verb=0.5)
-d4.stop()
-
-d5 >> varsaw("x-o-o{abcdefgh}(2x3x-**-+!-1)(x-o o[xo])", dur=1, sample=[0], room=0.9, verb=0.2, delay=(0,0.25))
-d5 >> play(f)
+c6 >> play(f)
 
 p1 >> pluck(1)
 
