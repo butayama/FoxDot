@@ -1,3 +1,79 @@
+Get FoxDot running:
+___________________
+Windows 10:
+start SuperCollider
+
+SuperCollider IDE:
+    Ctrl + b
+    FoxDot.start
+
+Terminal:
+    (venv_win) E:\GitHub\FoxDot>FoxDot
+
+Startup
+=======
+    Open SuperCollider and type in FoxDot.start and evaluate this line.
+    SuperCollider is now listening for messages from FoxDot.
+
+    Start FoxDot by entering FoxDot at the command line. If that doesn't
+    work, try python -m FoxDot.
+
+    If you have installed the SC3 Plugins, use the "Code" drop-down menu
+    to select "Use SC3 Plugins". Restart FoxDot and you'll have access
+    to classes found in the SC3 Plugins.
+
+    Keep up to date with the latest verion of FoxDot by running pip
+    install FoxDot --upgrade every few weeks.
+
+    Check out the YouTube tutorials for some in-depth tutorial videos on
+    getting to grips with FoxDot
+
+
+Using a SynthDef which is defined in SC:
+
+    // A synth def
+    (
+    SynthDef.new(\rongsinator, {|out, amp=0.25, pan=0, sustainTime=0.01,
+    f0=0.05, structure=0.5, brightness=0.5, damping=0.75, accent=0.9,
+    harmonicstretch=0.5, position=0.15, loss=0.15|
+
+        var trig = Trig.kr(1, dur: sustainTime);
+
+        var modeNum=2, cosFreq=0.025;
+        var sig = Rongs.ar(
+
+            trigger:trig,
+            sustain:trig,
+            f0:f0,
+            structure:structure,
+            brightness:brightness,
+            damping:damping,
+            accent:accent,
+            stretch:harmonicstretch,
+            position:position,
+            loss:loss,
+            modeNum:modeNum,
+            cosFreq:cosFreq
+
+        );
+
+        DetectSilence.ar(in: sig, amp: 0.0001, time: 0.1, doneAction: 2);
+        sig = Pan2.ar(sig, pan);
+        Out.ar(out, sig);
+
+    }).add;
+    )
+
+In FoxDot Window enter:
+
+    rongsinator = SynthDef("rongsinator")
+
+    p1 >> rongsinator()
+
+To edit values of the Synth in FoxDot:
+
+
+
 Getting Started
 ===============
 

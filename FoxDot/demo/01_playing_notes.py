@@ -44,7 +44,8 @@ p1 >> pluck([0,0,0], dur=[1,2,3])
 # Or amplitude, the "volume" of each note
 p1 >> pluck([0,0,0], amp=[1,2,3])
 
-# If the second list, the amp in this example, is too long, then the first list (the degree) just loops, and are matched with the remaining elements from the second list (the amplitude).
+# If the second list, the amp in this example, is too long, then the first list (the degree) just loops, and are
+# matched with the remaining elements from the second list (the amplitude).
 p1 >> pluck([0,2,4], amp=[1,2,3,1,5])
 
 # More generally, all the lists are traversed regardless of their length.
