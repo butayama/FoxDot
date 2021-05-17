@@ -21,7 +21,7 @@ bd >> play("x  x  x  ")
 hh >> play(" -")
 
 # You can lace patterns using round brackets
-# Whick plays like: "x o  xo "
+# Which plays like: "x o  xo "
 d1 >> play("(x )( x)o ")
 
 # The following is the same as "-------="

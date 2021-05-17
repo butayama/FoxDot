@@ -252,17 +252,16 @@ p1 >> blip(dur=4, echo=1)
 p1 >> blip(dur=4, echo=1, echotime=8)
 
 # We can use echo to make drum loops more interesting too
-d1 >> play("(aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUv)", dur=8, room=0.1, echo=0.75/2, echotime=1, lpf=linvar([1000,5000],16), sus=4, spin=1, amp=0.5)
+d1 >> play("(aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUv)", dur=8, room=0.1, echo=0.75, echotime=2, lpf=linvar([1000,5000],32))
 
 # Move the pan left to right 4 times across 4 beats
 p1 >> pads(dur=4, spin=4)
 
 p1.stop()
 d1.stop()
-d1.stop()
 
 # Move the pan left to right 4 times across 1 beat
-p1 >> pads(dur=4, sus=6, spin=4)
+p1 >> pads(dur=4, sus=1, spin=4)
 
 # bells melodic
 p5 >> bell(P[0,2,5,6], dur=10, oct=4, echo=0.75, echotime=8, room=0.2, verb=0.2, amp = 0.5, spin=4)
@@ -347,3 +346,4 @@ p5 >> donk(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutte
 p5 >> piano(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(8), dur=PDur([5,2,3],8), oct=4, room=0, verb=0)
 
 p5 >> keys(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(8), dur=PDur([5,2,3],8), oct=4, room=0, verb=0)
+

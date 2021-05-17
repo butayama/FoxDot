@@ -175,6 +175,11 @@ d1 >> play("  o  ", hpf=2000)
 #--------------------------------------------------------------------------------
 # They'd be extinct
 #--------------------------------------------------------------------------------
+
+var.chords = var([0,1,5,3],4)
+p5 >> soprano(var.chords+[0,2,5,6], dur=8, oct=5, room=0.2, verb=0.2)
+
+
 # Set the cutoff to change over time using a linvar
 d1 >> play("  o  ", hpf=linvar([0,2000],32))
 
@@ -199,7 +204,11 @@ d1 >> play("  o  ", lpf=400, lpr=0.2)
 # Use a linvar to vary both values over time
 d1 >> play("aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUv", dur=8, lpf=linvar([1000,5000],32), lpr=linvar([0.5,0.1],28), slide=linvar([-0.1,1],0.1), bend=0.05, sus=2, room=0.8, mix=0.8)
 
-d1 >> play("aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUv", dur=8, lpf=linvar([1000,5000],16), lpr=linvar([0.5,0.1],28), sus=12)
+d1 >> play("aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUv", dur=8, sus=12, room=0.5)
+
+d1 >> play("aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUv", dur=8, sus=12, echo=0.75, room=0.5)
+
+d1 >> play("aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUv", dur=8, sus=12, echo=0.75, room=0.5)
 
 d1.stop()
 p1.stop()
@@ -252,7 +261,7 @@ p1 >> blip(dur=4, echo=1)
 p1 >> blip(dur=4, echo=1, echotime=8)
 
 # We can use echo to make drum loops more interesting too
-d1 >> play("(aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUv)", dur=8, room=0.1, echo=0.75/2, echotime=1, lpf=linvar([1000,5000],16), sus=4, spin=1, amp=0.5)
+d1 >> play("(aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUv)", dur=8, room=0.1, echo=0.75, echotime=2, lpf=linvar([1000,5000],16), sus=6, spin=3, amp=0.5)
 
 # Move the pan left to right 4 times across 4 beats
 p1 >> pads(dur=4, spin=4)
@@ -260,80 +269,81 @@ p1 >> pads(dur=4, spin=4)
 p1.stop()
 d1.stop()
 d1.stop()
+var.chords = var([0,1,5,3],4)
 
 # Move the pan left to right 4 times across 1 beat
 p1 >> pads(dur=4, sus=6, spin=4)
 
 # bells melodic
-p5 >> bell(P[0,2,5,6], dur=10, oct=4, echo=0.75, echotime=8, room=0.2, verb=0.2, amp = 0.5, spin=4)
+p5 >> bell(var.chords+[0,2,5,6], dur=4, oct=4, echo=0.75, echotime=8, room=0.2, verb=0.2, amp = 0.5, spin=4)
 
-p5 >> gong(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(), dur=PDur([5,2,3],8), oct=3, room=0.2, verb=0.2)
+p5 >> gong(var.chords+[0,2,5,6] + P[0,3, 4, 5].stutter(), room=0.1, echo=0.75, echotime=4, dur=6, oct=3, verb=0.2)
 
 # synth melodic
-p5 >> varsaw(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(16), dur=PDur([5,2,3],8), oct=5, room=0.2, verb=0.2)
+p5 >> varsaw(var.chords+[0,2,5,6] + P[0,3, 4, 5].stutter(16), dur=8, oct=5, room=0.2, verb=0.2)
 
-p5 >> prophet(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(8), dur=PDur([5,2,3],8), oct=4, room=0, verb=0)
+p5 >> prophet(var.chords+[0,2,5,6] + P[0,3, 4, 5].stutter(8), dur=8, oct=4, room=0, verb=0)
 
-p5 >> swell(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(8), dur=PDur([5,2,3],8), oct=4, room=0, verb=0)
+p5 >> swell(var.chords+[0,2,5,6] + P[0,3, 4, 5].stutter(8), dur=8, oct=4, room=0, verb=0)
 
-p5 >> razz(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(8), dur=PDur([5,2,3],8), oct=4, room=0, verb=0)
+p5 >> razz(var.chords+[0,2,5,6] + P[0,3, 4, 5].stutter(8), dur=8, oct=4, room=0, verb=0)
 
-p5 >> pasha(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(8), dur=PDur([5,2,3],8), oct=4, room=0, verb=0)
+p5 >> pasha(var.chords+[0,2,5,6] + P[0,3, 4, 5].stutter(8), dur=8, oct=4, room=0, verb=0)
 
 # synth melodic + accords
-p5 >> lazer(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(), dur=PDur([5,2,3],8), oct=5, room=0.2, verb=0.2)
+p5 >> lazer(var.chords+[0,2,5,6] + P[0,3, 4, 5].stutter(), dur=8, oct=5, room=0.2, verb=0.2)
 
-p5 >> scatter(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(), dur=PDur([5,2,3],8), oct=5, room=0.2, verb=0.2)
+p5 >> scatter(var.chords+[0,2,5,6] + P[0,3, 4, 5].stutter(), dur=8, oct=5, room=0.2, verb=0.2)
 
 # synth melodic + echoes
-p5 >> charm(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(8), dur=PDur([5,2,3],8), oct=4, room=0.1, verb=0.1)
+p5 >> charm(var.chords+[0,2,5,6], dur=8, oct=4, room=0.1, verb=0.1)
 
-p5 >> soprano(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(), dur=PDur([5,2,3],8), oct=5, room=0.2, verb=0.2)
+p5 >> soprano(var.chords+[0,2,5,6], dur=8, oct=5, room=0.2, verb=0.2)
 
 # blubber melodic
-p5 >> growl(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(), dur=PDur([5,2,3],8), oct=5, room=0.2, verb=0.2)
+p5 >> growl(var.chords+[0,2,5,6] + P[0,3, 4, 5].stutter(), dur=8, oct=5, room=0.2, verb=0.2)
 
-p5 >> space(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(8), dur=PDur([5,2,3],8), oct=5, room=0, verb=0)
+p5 >> space(var.chords+[0,2,5,6] + P[0,3, 4, 5].stutter(8), dur=8, oct=5, room=0, verb=0)
 
 # synth melodic bass
-p5 >> bass(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(8), dur=PDur([5,2,3],8), oct=5, room=0.9, verb=0.5)
+p5 >> bass(var.chords+[0,2,5,6] + P[0,3, 4, 5].stutter(8), dur=8, oct=5, room=0.9, verb=0.5)
 
 # bells melodic
-p5 >> bell(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(), dur=PDur([5,2,3],8), oct=5, room=0.2, verb=0.2)
+p5 >> bell(var.chords+[0,2,5,6] + P[0,3, 4, 5].stutter(), dur=8, oct=5, room=0.2, verb=0.2)
 
-p5 >> gong(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(), dur=PDur([5,2,3],8), oct=3, room=0.2, verb=0.2)
+p5 >> gong(var.chords+[0,2,5,6] + P[0,3, 4, 5].stutter(), dur=8, oct=3, room=0.2, verb=0.2)
 
 # simple e-instrument melodic
-p5 >> viola(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(8), dur=PDur([5,2,3],8), oct=4, room=0, verb=0)
+p5 >> viola(var.chords+[0,2,5,6] + P[0,3, 4, 5].stutter(8), dur=8, oct=4, room=0, verb=0)
 
-p5 >> blip(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(8), dur=PDur([5,2,3],8), oct=4, room=0, verb=0)
+p5 >> blip(var.chords+[0,2,5,6] + P[0,3, 4, 5].stutter(8), dur=8, oct=4, room=0, verb=0)
 
-p5 >> orient(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(8), dur=PDur([5,2,3],8), oct=4, room=0, verb=0)
+p5 >> orient(var.chords+[0,2,5,6] + P[0,3, 4, 5].stutter(8), dur=8, oct=4, room=0, verb=0)
 
 # simple e-instrument melodic + noise
-p5 >> quin(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(8), dur=PDur([5,2,3],8), oct=4, room=0, verb=0)
+p5 >> quin(var.chords+[0,2,5,6] + P[0,3, 4, 5].stutter(8), dur=dur=8, oct=4, room=0, verb=0)
 
-p5 >> ripple(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(8), dur=PDur([5,2,3],8), oct=4, room=0, verb=0)
+p5 >> ripple(var.chords+[0,2,5,6] + P[0,3, 4, 5].stutter(8), dur=8, oct=4, room=0, verb=0)
 
-p5 >> spark(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(8), dur=PDur([5,2,3],8), oct=4, room=0, verb=0)
+p5 >> spark(var.chords+[0,2,5,6] + P[0,3, 4, 5].stutter(8), dur=8, oct=4, room=0, verb=0)
 
-p5 >> zap(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(8), dur=PDur([5,2,3],8), oct=4, room=0, verb=0)
+p5 >> zap(var.chords+[0,2,5,6] + P[0,3, 4, 5].stutter(8), dur=8, oct=4, room=0, verb=0)
 
-p5 >> pulse(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(8), dur=PDur([5,2,3],8), oct=4, room=0, verb=0)
+p5 >> pulse(var.chords+[0,2,5,6] + P[0,3, 4, 5].stutter(8), dur=8, oct=4, room=0, verb=0)
 
 # organ + noise melodic
-p5 >> klank(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(8), dur=PDur([5,2,3],8), oct=4, room=0, verb=0)
+p5 >> klank(var.chords+[0,2,5,6] + P[0,3, 4, 5].stutter(8), dur=8, oct=4, room=0, verb=0)
 
 # organ melodic
-p5 >> feel(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(8), dur=PDur([5,2,3],8), oct=4, room=0, verb=0)
+p5 >> feel(var.chords+[0,2,5,6] + P[0,3, 4, 5].stutter(8), dur=8, oct=4, room=0, verb=0)
 
-p5 >> ambi(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(8), dur=PDur([5,2,3],8), oct=4, room=0, verb=0)
+p5 >> ambi(var.chords+[0,2,5,6] + P[0,3, 4, 5].stutter(8), dur=8, oct=4, room=0, verb=0)
 
 # organ melodic + echoes + accords
-p5 >> glass(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(8), dur=PDur([5,2,3],8), oct=4, room=0, verb=0)
+p5 >> glass(var.chords+[0,2,5,6] + P[0,3, 4, 5].stutter(8), dur=8, oct=4, room=0, verb=0)
 
 # Xylophone melodic
-p5 >> marimba(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(8), dur=PDur([5,2,3],8), oct=4, room=0, verb=0)
+p5 >> marimba(var.chords+[0,2,5,6] + P[0,3, 4, 5].stutter(8), dur=PDur([5,2,3],8), oct=4, room=0, verb=0)
 
 # Xylophone melodic + noise
 p5 >> snick(P[0,2,5,6, [(0, 2, 5), 9, 11, 12,(2, 4, 5, 8)]] + P[0,3, 4, 5].stutter(8), dur=PDur([5,2,3],8), oct=4, room=0, verb=0)
