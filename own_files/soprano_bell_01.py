@@ -178,31 +178,52 @@ d1 >> play("  o  ", hpf=2000)
 # They'd be extinct
 #--------------------------------------------------------------------------------
 
-var.chords = var([0,1,5,3],4)
-p4 >> soprano(var.chords+[0,2,5,6], dur=8, oct=5, room=0.2, verb=0.2, amp=1)
-
-p4.stop()
-
-p3 >> soprano(var.chords+[2,4,6,0], dur=6, oct=4, room=0.2, verb=0.2, amp=1)
-
-p3.stop()
-
-p2 >> soprano(var.chords+[6,4,2,0], dur=10, oct=3, room=0.2, verb=0.2, amp=1)
-
-p2.stop()
-
-p1 >> soprano(var.chords+[0,6,4,2], dur=12, oct=2, room=0.2, verb=0.2, amp=1)
-
-p1.stop()
-
-
-
+var.chords = var([0,1,5,3],9)
+p5 >> soprano(var.chords+[0,2,5,6], dur=8, oct=5, room=0.2, verb=0.2, amp=1)
 
 p5.stop()
 
-p5 >> bell(var.chords+[0,2,5,6], dur=4, oct=4, echo=0.75, echotime=8, room=0.2, verb=0.2, spin=4, amp=1)
+p4 >> soprano(var.chords+[3,5,6,7,8,6], dur=10, oct=4, room=0.2, verb=0.2, amp=1)
 
-p6 >> gong(var.chords+[0,2,5,6], room=0.1, echo=0.75, echotime=4, dur=6, oct=3, verb=0.2, amp=1)
+p4.stop()
+
+p3 >> soprano(var.chords+[0,2,5,6], dur=12, oct=3, room=0.2, verb=0.2, amp=1)
+
+p3.stop()
+
+p2 >> soprano(var.chords+[3,5,6,7,8,6], dur=14, oct=2, room=0.2, verb=0.2, amp=0.5)
+
+p2.stop()
+
+p1 >> soprano(var.chords+[2,9,10,11], dur=16, oct=1, room=0.2, verb=0.2, amp=1)
+
+p1.stop()
+
+p0 >> soprano(var.chords+[11,9,8,4,2,1,0], dur=24, oct=0, room=0.2, verb=0.2, amp=1)
+
+p0.stop()
+
+p5.stop()
+
+p5 >> bell(var.chords+[0,2,4,6], dur=4, oct=5, echo=0.75, echotime=4, room=0.2, verb=0.2, spin=4, amp=1)
+
+
+p4 >> bell(var.chords+[6,2,5,0], dur=6, oct=4, echo=0.75, echotime=4, room=0.2, verb=0.2, spin=4, amp=1)
+
+
+p3 >> bell(var.chords+[2,9,10,11], dur=8, oct=3, echo=0.75, echotime=4, room=0.2, verb=0.2, spin=4, amp=1)
+
+
+p2 >> bell(var.chords+[3,5,6,7,8,6], dur=10, oct=2, echo=0.75, echotime=8, room=0.2, verb=0.2, spin=4, amp=0.5)
+
+
+p1 >> bell(var.chords+[4,2,0,5,8,6], dur=10, oct=1, echo=0.75, echotime=8, room=0.2, verb=0.2, spin=4, amp=0.5)
+
+
+p0 >> bell(var.chords+[11,9,8,4,2,1,0], dur=10, oct=0, echo=0.75, echotime=8, room=0.2, verb=0.2, spin=4, amp=1)
+
+
+p6 >> gong(var.chords+[12,6,8,4,6,2,9,1], room=0.1, echo=0.75, echotime=4, dur=6, oct=3, verb=0.2, amp=1)
 
 p6.stop()
 
@@ -216,8 +237,95 @@ d1 >> play("  o  ", hpf=2000)
 # Set the resonance to 0.2 - can you hear the difference?
 d1 >> play("  o  ", hpf=2000, hpr=0.2)
 
+d2.stop()
+
 # Set the cutoff *and* resonance to change over time using linvar
-d2 >> play("  o  ", hpf=linvar([0,5000],64), hpr=linvar([1,0.1],28))
+d2 >> play("  a  ", dur=1.2, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  A  ", dur=0.6, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  b  ", dur=0.9, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  B  ", dur=1.2, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  c  ", dur=1.5, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  C  ", dur=1.4, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  d  ", dur=1.2, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  D  ", dur=0.9, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  e  ", dur=1.2, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  E  ", dur=1.2, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  f  ", dur=1.1, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  F  ", dur=1.0, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  g  ", dur=1.4, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  G  ", dur=0.9, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  h  ", dur=1.1, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  H  ", dur=1.1, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  i  ", dur=1.2, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  I  ", dur=1.2, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  j  ", dur=1.0, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  J  ", dur=0.9, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  k  ", dur=1.3, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  K  ", dur=0.9, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  l  ", dur=1.05, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  L  ", dur=1.0, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  m  ", dur=1.3, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  M  ", dur=1.2, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  n  ", dur=1.2, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  N  ", dur=1.0, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  o  ", dur=1.3, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  O  ", dur=1.2, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  p  ", dur=1.2, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  P  ", dur=1.2, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  q  ", dur=1.6, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  Q  ", dur=1.0, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  r  ", dur=1.2, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  R  ", dur=1.2, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  s  ", dur=1.4, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  S  ", dur=1.3, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  t  ", dur=1.2, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  T  ", dur=1.2, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  u  ", dur=1.7, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  U  ", dur=1.0, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
+d2 >> play("  v  ", dur=1.2, hpf=linvar([300,1500],16), hpr=linvar([0.1,0.2],5))
+
 
 
 
