@@ -29,6 +29,8 @@ p1 >> pluck([0, 2, 4, 6, 7], scale=Scale.minor)
 # Start a player in the default scale (Major)
 p1 >> pluck([0, 2, 4, 6, 7])
 
+p1 >> pluck([1,2,3,4,5,6,7,8,9,10,11,12])
+
 # Change the default scale to Dorian
 Scale.default = Scale.dorian
 
@@ -177,11 +179,13 @@ d1 >> play("  o  ", hpf=2000)
 #--------------------------------------------------------------------------------
 
 var.chords = var([0,1,5,3],4)
-p4 >> soprano(var.chords+[0,2,5,6], dur=8, oct=2, room=0.2, verb=0.2, amp=1)
+p4 >> soprano(var.chords+[0,2,5,6], dur=8, oct=5, room=0.2, verb=0.2, amp=1)
+
+p4.stop()
 
 p5.stop()
 
-p5 >> bell(var.chords+[0,2,5,6], dur=4, oct=4, echo=0.75, echotime=8, room=0.2, verb=0.2, amp = 0.5, spin=4, amp=1)
+p5 >> bell(var.chords+[0,2,5,6], dur=4, oct=4, echo=0.75, echotime=8, room=0.2, verb=0.2, spin=4, amp=1)
 
 p6 >> gong(var.chords+[0,2,5,6], room=0.1, echo=0.75, echotime=4, dur=6, oct=3, verb=0.2, amp=1)
 
