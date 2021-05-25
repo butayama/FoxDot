@@ -1,15 +1,147 @@
 # https://foxdot.org/docs/player-attributes/
 
+print(Samples)
+
+Clock.bpm = 140
+
+# http://studio.dubroom.org/tutorials-computerdub04.htm 
+# example0001
+
+# close hi-hat
+hc >> play(":", dur=1/2)
+# acoustic snare
+sn >> play("0o0o", dur=1)
+# bass drum
+bd >> play("x0x0", dur=1)
+
+# example0002
+
+# close hi-hat
+hc >> play(":", dur=1/2)
+# acoustic snare
+sn >> play("00o0", dur=1)
+# bass drum
+bd >> play("x0x0", dur=1)
+
+
+# http://studio.dubroom.org/tutorials-computerdub05.htm
+# STEPPERS
+# example0003
+
+Clock.bpm = 130
+# close hi-hat
+hc >> play(":", dur=1/2)
+# acoustic snare
+sn >> play("00o0", dur=1)
+# bass drum
+bd >> play("xxxx", dur=1)
+
+
+# ONE DROP
+# example0004
+
+Clock.bpm = 130
+# close hi-hat
+hc >> play(":", dur=1/2)
+# acoustic snare
+sn >> play("00o0", dur=1)
+# bass drum
+bd >> play("00x0", dur=1)
+
+
+# TWO DROP
+# example0005
+
+Clock.bpm = 130
+# close hi-hat
+hc >> play(":", dur=1/2)
+# acoustic snare
+sn >> play("00o0", dur=1)
+# bass drum
+bd >> play("x0x0", dur=1)
+
+
+# HALF DROP
+# example0006
+
+Clock.bpm = 130
+# close hi-hat
+hc >> play(":", dur=1/2)
+# acoustic snare
+sn >> play("00o0", dur=1)
+# bass drum
+bd >> play("x000", dur=1)
+
+# VARIATION 1
+# steppers with a Timbale on the 2nd-2 1/2 and 4rth-4 1/2 count of the bar.
+
+Clock.bpm = 130
+# close hi-hat
+hc >> play(":", dur=1/2)
+# acoustic snare
+sn >> play("00o0", dur=1)
+# bass drum
+bd >> play("xxxx", dur=1)
+# timbale
+ti >> play("00i000i0", dur=1/2)
+
+
+# VARIATION 2
+# two drop with the first bar having a rim shot doing what the Timbale does 
+# in the previous example where the second bar is a normal two drop
+
+Clock.bpm = 130
+# close hi-hat
+hc >> play(":", dur=1/2)
+# acoustic snare
+sn >> play("00o0", dur=1)
+# bass drum
+bd >> play("x0x0", dur=1)
+#  rim shot
+rs >> play("00u000u000000000", dur=1/2)
+
+
+# VARIATION 3
+# steppers with a snare or rim at the half counts after the 2nd and 4th count 
+
+Clock.bpm = 130
+# close hi-hat
+hc >> play(":", dur=1/2)
+# acoustic snare
+sn >> play("00o0", dur=1)
+# bass drum
+bd >> play("xxxx", dur=1)
+#  rim shot
+rs >> play("000u000u", dur=1/2)
+
+
+# http://studio.dubroom.org/tutorials-computerdub06.htm
+# STRAIGHT
+
+Clock.bpm = 130
+# close hi-hat
+hc >> play(":", dur=1/2)
+# side stick
+sn >> play("00u0", dur=1)
+# bass drum
+bd >> play("00x0", dur=1)
+
+
+# SWING
+
+Clock.bpm = 130
+# close hi-hat
+hc >> play(":0::0::0::0:", dur=1/3)
+# side stick
+sn >> play("000000u00000", dur=1/3)
+# bass drum
+bd >> play("000000x00000", dur=1/3)
+
 
 # http://studio.dubroom.org/tutorials-computerdub07.htm
 # THE NYABINGHI RHYTHM
 
-
-def csr(bpm=140, scale="chromatic",root="C"):
-    Clock.bpm = bpm
-    Scale.default = scale
-    Root.default = root
-    return
+Clock.bpm = 170
 
 def nyabinghi():
     #  low conga
@@ -51,26 +183,38 @@ def nyabinghi():
     nyabinghi = Group(c1,hc,b1,bh,cc,cb,ht,mt,oh,lt,ch,bd)
     return nyabinghi
 
+print(PEuclid2(8,16,'X','c'))
+
+help(Scale)
+
+help(Pattern)
+# http://studio.dubroom.org/tutorials-computerdub08.htm
+
+print(P[0,1,2] & P[3,4])
+
+
 # http://studio.dubroom.org/tutorials-computerdub15.htm
 
+def csr(bpm=140, scale="chromatic",root="C"):
+    Clock.bpm = bpm
+    Scale.default = scale
+    Root.default = root
+    return
 # ___________________________________________________________________________________________________________
 # PROGRAMMING A BASIC DRUM RHYTHM
 # ___________________________________________________________________________________________________________
-def drum_rythm():
-    #  close hi-hat
-    ch >> play("-", dur=0.5, sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=[1, 0.4])
+#  close hi-hat
+ch >> play("-", dur=0.5, sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=[1, 0.4])
 
-    # open hi-hat
-    oh >> play("=", dur=[0.5], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=PStep(8, 1))
-    print(PStep(8, 1))
+# open hi-hat
+oh >> play("=", dur=[0.5], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=PStep(8, 1))
+print(PStep(8, 1))
 
-    # snare drum
-    sd >> play("0i", dur=[2.0, 2.0], sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=1)
+# snare drum
+sd >> play("0i", dur=[2.0, 2.0], sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=1)
 
-    # kick drum
-    kd >> play("XXxXXx", dur=[2.0, 1.5, 0.5, 2.0, 1, 1], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=[1])
-    drum_rythm = Group(ch,oh,sd,kd)
-    return drum_rythm
+# kick drum
+kd >> play("XXxXXx", dur=[2.0, 1.5, 0.5, 2.0, 1, 1], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=[1])
 
 # http://studio.dubroom.org/tutorials-computerdub16.htm
 # ___________________________________________________________________________________________________________
@@ -80,16 +224,15 @@ def drum_rythm():
 # piano melodic A + E Chord
 pa >> piano([0,(9,12,16),0,(9,12,16),0,0,(4,7,11),0,(4,7,11),0], dur=[rest(1),0.25,rest(1.75),0.25,rest(0.75)], oct=5, pan=-0.2, room=0.5, verb=0.5, sus=0.05, amp=[1])
 
-p1 >> piano([_,7], dur=[rest(3.5),0.5])
+drum = Group(ch,oh,sd,kd)
+piano = Group(pa)
 
 # synth melodic bass
 bass_A0_01 = Player()
 bass_B0_01 = Player()
 bass_C1_01 = Player()
 bass_D1_01 = Player()
-bass_D1s_01 = Player()
 bass_E1_01 = Player()
-
 
 bass_A0_02 = Player()
 bass_B0_02 = Player()
@@ -136,84 +279,36 @@ bass_E1_08 = Player()
 csr()
 
 def bass_bar_01(run=1):
-    bass_A0_01 >> bass([_,9,_,9,9,_], dur=[rest(1),0.75,rest(0.25),0.5,0.5,1], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[rest(1),0.75,rest(0.25),0.5,0.5,1])
-    bass_E1_01 >> bass([_,16,_], dur=[rest(3.0),0.5,rest(0.5)], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[rest(3.0),0.5,rest(0.5)])
-    bass_C1_01 >> bass([_,12], dur=[rest(3.5),0.5], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[rest(3.5),0.5])
+    bass_A0_01 >> bass([_,9,_,9,9,_], dur=[rest(1),0.75,rest(0.25),0.5,0.5,1], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[rest(1),0.75,rest(0.25),0.5,0.5,1], amp=[0.5])
+    bass_E1_01 >> bass([_,16,_], dur=[rest(3.0),0.5,rest(0.5)], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[rest(3.0),0.5,rest(0.5)], amp=[0.5])
+    bass_C1_01 >> bass([_,12], dur=[rest(3.5),0.5], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[rest(3.5),0.5], amp=[0.5])
     bass_bar_01_g = Group(bass_A0_01, bass_E1_01, bass_C1_01)
     if run:
         return bass_bar_01_g
     else:
         bass_bar_01_g.stop()
         return bass_bar_01_g
-        
+    
 def bass_bar_02(run=1):
-    bass_B0_01 >> bass([_,11,_], dur=[rest(2),1.5,rest(0.5)], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[rest(2),1.5,rest(0.5)])
-    bass_E1_01 >> bass([16,16,_], dur=[1,1,rest(2)], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[1,1,rest(2)])
-    bass_bar_02_g = Group(bass_B0_01, bass_E1_01)
+    bass_A0_01 >> bass([_,9,_,9,9,_], dur=[rest(1),0.75,rest(0.25),0.5,0.5,1], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[rest(1),0.75,rest(0.25),0.5,0.5,1], amp=[0.5])
+    bass_E1_01 >> bass([_,16,_], dur=[rest(3.0),0.5,rest(0.5)], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[rest(3.0),0.5,rest(0.5)], amp=[0.5])
+    bass_C1_01 >> bass([_,12], dur=[rest(3.5),0.5], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[rest(3.5),0.5], amp=[0.5])
+    bass_bar_01_g = Group(bass_A0_01, bass_E1_01, bass_C1_01)
     if run:
         return bass_bar_02_g
     else:
-        bass_bar_02_g.stop()    
-        return bass_bar_02_g   
-    
-def bass_bar_03(run=1):
-    bass_B0_01 >> bass([_,11,11], dur=[rest(2),1,1], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[rest(2),1,1])
-    bass_E1_01 >> bass([16,16,_], dur=[1,1,rest(2)], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[1,1,rest(2)])
-    bass_bar_03_g = Group(bass_B0_01, bass_E1_01)
-    if run:
-        return bass_bar_03_g
-    else:
-        bass_bar_03_g.stop()    
-        return bass_bar_03_g
-        
-def bass_bar_04(run=1):
-    bass_B0_01 >> bass([_,11,11], dur=[rest(2),1,1], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[rest(2),1,1])
-    bass_D1s_01 >> bass([15,_], dur=[0.5,rest(3.5)], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[0.5,rest(3.5)])
-    bass_E1_01 >> bass([_,16,16,_], dur=[0.5,0.5,1,rest(2)], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[0.5,0.5,1,rest(2)])
-    bass_bar_04_g = Group(bass_B0_01, bass_D1s_01, bass_E1_01)
-    if run:
-        return bass_bar_04_g
-    else:
-        bass_bar_04_g.stop()    
-        return bass_bar_04_g   
-        
-def bass_loop(n=0):
-    while n <= 8:
-        if n in (1, 3, 5, 7):
-            bass_group = bass_bar_01(1)
-        elif n in (2, 6):
-            bass_group = bass_bar_02(1)
-        elif n in (3):
-            bass_group = bass_bar_03(1)
-        elif n in (8):
-            bass_group = bass_bar_04(1)
-        else:
-            if n == 8:
-                return
-            else:
-                Clock.future(Clock.bar_length(), bass_loop, args=(n + Clock.bar_length()))
-
-bass_loop()                 
+        bass_bar_02_g.stop()
+        return bass_bar_02_g
 
 bass_group = bass_bar_01(1)
-
 nyabinghi_group = nyabinghi()
-
-drum_group = drum_rythm()
-
-piano_group = Group(pa)
 
 bass_group.stop()
 
 bass_group.solo()
 
-drum_group.solo()
+bass_group.amplify(25)
 
-nyabinghi_group.solo()
-
-nyabinghi_bass_group = Group(c1,hc,b1,bh,cc,cb,ht,mt,oh,lt,ch,bd, bass_A0_01, bass_E1_01, bass_C1_01)
-
-nyabinghi_bass_group.solo()
 
 bass_bar_01 = Group(bass_A0_01, bass_E1_01, bass_C1_01)
 
