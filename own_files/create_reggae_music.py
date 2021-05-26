@@ -141,9 +141,11 @@ csr()
 
 def bass_bar_01(run=1):
     bass_A0_01 >> bass([_,9,_,9,9,_], dur=[rest(1),0.75,rest(0.25),0.5,0.5,1], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[rest(1),0.75,rest(0.25),0.5,0.5,1])
+    bass_B0_01 >> bass([_], dur=[rest(4)])
+    bass_D1s_01 >> bass([_], dur=[rest(4)])
     bass_E1_01 >> bass([_,16,_], dur=[rest(3.0),0.5,rest(0.5)], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[rest(3.0),0.5,rest(0.5)])
     bass_C1_01 >> bass([_,12], dur=[rest(3.5),0.5], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[rest(3.5),0.5])
-    bass_bar_01_g = Group(bass_A0_01, bass_E1_01, bass_C1_01)
+    bass_bar_01_g = Group(bass_A0_01, bass_B0_01, bass_D1s_01, bass_E1_01, bass_C1_01)
     if run:
         return bass_bar_01_g
     else:
@@ -151,9 +153,12 @@ def bass_bar_01(run=1):
         return bass_bar_01_g
         
 def bass_bar_02(run=1):
+    bass_A0_01 >> bass([_], dur=[rest(4)])
     bass_B0_01 >> bass([_,11,_], dur=[rest(2),1.5,rest(0.5)], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[rest(2),1.5,rest(0.5)])
+    bass_D1s_01 >> bass([_], dur=[rest(4)])
     bass_E1_01 >> bass([16,16,_], dur=[1,1,rest(2)], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[1,1,rest(2)])
-    bass_bar_02_g = Group(bass_B0_01, bass_E1_01)
+    bass_C1_01 >> bass([_], dur=[rest(4)])
+    bass_bar_02_g = Group(bass_A0_01, bass_B0_01, bass_D1s_01, bass_E1_01, bass_C1_01)
     if run:
         return bass_bar_02_g
     else:
@@ -161,9 +166,12 @@ def bass_bar_02(run=1):
         return bass_bar_02_g   
     
 def bass_bar_03(run=1):
+    bass_A0_01 >> bass([_], dur=[rest(4)])
     bass_B0_01 >> bass([_,11,11], dur=[rest(2),1,1], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[rest(2),1,1])
+    bass_D1s_01 >> bass([_], dur=[rest(4)])
     bass_E1_01 >> bass([16,16,_], dur=[1,1,rest(2)], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[1,1,rest(2)])
-    bass_bar_03_g = Group(bass_B0_01, bass_E1_01)
+    bass_C1_01 >> bass([_], dur=[rest(4)])
+    bass_bar_03_g = Group(bass_A0_01, bass_B0_01, bass_D1s_01, bass_E1_01, bass_C1_01)
     if run:
         return bass_bar_03_g
     else:
@@ -171,10 +179,12 @@ def bass_bar_03(run=1):
         return bass_bar_03_g
         
 def bass_bar_04(run=1):
+    bass_A0_01 >> bass([_], dur=[rest(4)])
     bass_B0_01 >> bass([_,11,11], dur=[rest(2),1,1], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[rest(2),1,1])
     bass_D1s_01 >> bass([15,_], dur=[0.5,rest(3.5)], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[0.5,rest(3.5)])
     bass_E1_01 >> bass([_,16,16,_], dur=[0.5,0.5,1,rest(2)], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[0.5,0.5,1,rest(2)])
-    bass_bar_04_g = Group(bass_B0_01, bass_D1s_01, bass_E1_01)
+    bass_C1_01 >> bass([_], dur=[rest(4)])
+    bass_bar_04_g = Group(bass_A0_01, bass_B0_01, bass_D1s_01, bass_E1_01, bass_C1_01)
     if run:
         return bass_bar_04_g
     else:
@@ -185,13 +195,13 @@ def bass_loop(n=0,stop=11):
     print(n)
     if n <= stop:
         print(n)
-        if n in [1, 3, 5, 7]:
+        if n in [0, 1, 3, 5, 7]:
             print(bass_bar_01)
             bass_group = bass_bar_01(1)
         elif n in [2, 6]:
             print(bass_bar_02)
             bass_group = bass_bar_02(1)
-        elif n in [3]:
+        elif n in [4]:
             print(bass_bar_03)
             bass_group = bass_bar_03(1)
         elif n in [8]:
@@ -204,7 +214,7 @@ def bass_loop(n=0,stop=11):
         return
     Clock.future(4,bass_loop, args=(n + 1,stop))
 
-bass_loop(1)
+bass_loop(0,9)
 
 bass_group = bass_bar_01(1)
 
