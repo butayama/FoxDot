@@ -69,8 +69,8 @@ def drum_rhythm():
 
     # kick drum
     kd >> play("XXxXXx", dur=[2.0, 1.5, 0.5, 2.0, 1, 1], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=[1])
-    drum_rhythm = Group(ch,oh,sd,kd)
-    return drum_rhythm
+    drum_rythm = Group(ch,oh,sd,kd)
+    return drum_rythm
 
 # http://studio.dubroom.org/tutorials-computerdub16.htm
 # ___________________________________________________________________________________________________________
@@ -204,7 +204,7 @@ def bass_loop(n=0,stop=11):
         return
     Clock.future(4,bass_loop, args=(n + 1,stop))
 
-bass_loop(1)
+bass_loop(1)                 
 
 bass_group = bass_bar_01(1)
 
