@@ -214,7 +214,7 @@ def bass_loop(n=0,stop=11):
         return
     Clock.future(4,bass_loop, args=(n + 1,stop))
 
-bass_loop(0,9)
+bass_loop(1,9)
 
 bass_group = bass_bar_01(1)
 
