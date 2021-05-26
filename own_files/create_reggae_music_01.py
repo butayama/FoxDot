@@ -135,64 +135,71 @@ bass_E1_08 = Player()
 
 csr()
 
-def bass_bar_01():
+def bass_bar_01(run=1):
     bass_A0_01 >> bass([_,9,_,9,9,_], dur=[rest(1),0.75,rest(0.25),0.5,0.5,1], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[rest(1),0.75,rest(0.25),0.5,0.5,1])
-    bass_B0_01 >> bass([_], dur=[rest(4)])
-    bass_D1s_01 >> bass([_], dur=[rest(4)])
     bass_E1_01 >> bass([_,16,_], dur=[rest(3.0),0.5,rest(0.5)], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[rest(3.0),0.5,rest(0.5)])
     bass_C1_01 >> bass([_,12], dur=[rest(3.5),0.5], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[rest(3.5),0.5])
-
+    bass_bar_01_g = Group(bass_A0_01, bass_E1_01, bass_C1_01)
+    if run:
+        return bass_bar_01_g
+    else:
+        bass_bar_01_g.stop()
+        return bass_bar_01_g
         
-def bass_bar_02():
-    bass_A0_01 >> bass([_], dur=[rest(4)])
+def bass_bar_02(run=1):
     bass_B0_01 >> bass([_,11,_], dur=[rest(2),1.5,rest(0.5)], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[rest(2),1.5,rest(0.5)])
-    bass_D1s_01 >> bass([_], dur=[rest(4)])
     bass_E1_01 >> bass([16,16,_], dur=[1,1,rest(2)], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[1,1,rest(2)])
-    bass_C1_01 >> bass([_], dur=[rest(4)])
-     
-def bass_bar_03():
-    bass_A0_01 >> bass([_], dur=[rest(4)])
+    bass_bar_02_g = Group(bass_B0_01, bass_E1_01)
+    if run:
+        return bass_bar_02_g
+    else:
+        bass_bar_02_g.stop()    
+        return bass_bar_02_g   
+    
+def bass_bar_03(run=1):
     bass_B0_01 >> bass([_,11,11], dur=[rest(2),1,1], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[rest(2),1,1])
-    bass_D1s_01 >> bass([_], dur=[rest(4)])
     bass_E1_01 >> bass([16,16,_], dur=[1,1,rest(2)], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[1,1,rest(2)])
-    bass_C1_01 >> bass([_], dur=[rest(4)])
+    bass_bar_03_g = Group(bass_B0_01, bass_E1_01)
+    if run:
+        return bass_bar_03_g
+    else:
+        bass_bar_03_g.stop()    
+        return bass_bar_03_g
         
-def bass_bar_04():
-    bass_A0_01 >> bass([_], dur=[rest(4)])
+def bass_bar_04(run=1):
     bass_B0_01 >> bass([_,11,11], dur=[rest(2),1,1], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[rest(2),1,1])
     bass_D1s_01 >> bass([15,_], dur=[0.5,rest(3.5)], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[0.5,rest(3.5)])
     bass_E1_01 >> bass([_,16,16,_], dur=[0.5,0.5,1,rest(2)], oct=4, pan=0.3, room=0.1, verb=0.1, sus=[0.5,0.5,1,rest(2)])
-    bass_C1_01 >> bass([_], dur=[rest(4)])
-   
+    bass_bar_04_g = Group(bass_B0_01, bass_D1s_01, bass_E1_01)
+    if run:
+        return bass_bar_04_g
+    else:
+        bass_bar_04_g.stop()    
+        return bass_bar_04_g   
         
-def bass_loop():
-    Clock.future(4, bass_bar_01, start=4)
-    Clock.future(4, bass_bar_02, start=8)
-    Clock.future(4, bass_bar_01, start=12)
-    Clock.future(4, bass_bar_03, start=16)
-    Clock.future(4, bass_bar_01, start=20)
-    Clock.future(4, bass_bar_02, start=24)    
-    Clock.future(4, bass_bar_01, start=28)
-    Clock.future(4, bass_bar_04, start=32)
-    
-def bass_loop1():
-    bass_bar_01, start=4
-    
+def bass_loop(n=0):
+    bar = 0
+    Clock.future(Clock.bar_length(), bass_bar_01(1))
+    bar += 1
+    while bar <= 8:
+        if bar in (1, 3, 5, 7):
+            bar += 1
+            Clock.future(Clock.bar_length(), bass_bar_01(1))
+        elif n in (2, 6):
+            bar += 1
+            Clock.future(Clock.bar_length(), bass_bar_02(1))
+        elif n in (3):
+            bar += 1
+            Clock.future(Clock.bar_length(), bass_bar_03(1))
+        elif n in (8):
+            bar += 1
+            Clock.future(Clock.bar_length(), bass_bar_04(1))
+        else:
+            if n == 8:
+                return
 
-    Clock.future(4, bass_bar_02, start=8)
-    Clock.future(4, bass_bar_01, start=12)
-    Clock.future(4, bass_bar_03, start=16)
-    Clock.future(4, bass_bar_01, start=20)
-    Clock.future(4, bass_bar_02, start=24)    
-    Clock.future(4, bass_bar_01, start=28)
-    Clock.future(4, bass_bar_04, start=32)
-    
-x = Pvar([bass_bar_01(), bass_bar_02(), bass_bar_01(), bass_bar_03(),bass_bar_01(), bass_bar_02(), bass_bar_01(), bass_bar_04()], 4)
-print(int(Clock.now()), x)
 
-bass_bar_04()
-
-bass_loop1()                 
+bass_loop()                 
 
 bass_group = bass_bar_01(1)
 

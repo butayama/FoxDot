@@ -137,7 +137,7 @@ p1 >> pluck(Pvar([pattern1, pattern2], 4), dur=1/4)
 print(linvar([0, 1], 8))
 print(linvar([0, 1], 8, start=2))
 
-# This can be combined with Clock.mod() to start a ramp at the start of the#
+# This can be combined with Clock.mod() to start a ramp at the start of the
 # next 32 beat cycle:
 
 d1 >> play("x-o-", hpf=linvar([0,4000],[32,inf], start=Clock.mod(32)))
