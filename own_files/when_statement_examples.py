@@ -34,7 +34,7 @@ print("a is bigger")
 
 var.b = var([1,2,3,2,1], 1)
 
-var.a = var([0, 3, 0, 4], var.b)
+var.a = var([0, 3, 0, 4], 4)
 
 p1 >> pluck(var.a, dur=[1,1/4,1/4,1/2,2]) + (0, 2, 4, 6)
 
