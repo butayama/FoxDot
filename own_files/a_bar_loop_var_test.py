@@ -1,4 +1,96 @@
 a = var([0,4,5,3],8)
+
+a.update([1,4], 8)
+
+c = linvar([0,1],16)
+
+# a 'Pvar' is a 'var' that can store patterns (as opposed to say, integers)
+d = Pvar([P[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], P[0, 1, 2, 3, 4, 5, 4, 3, 2, 1]], 8)
+
+print(int(Clock.now()), d)
+
+p1 >> bass(a, amp=c, dur=1/4) + d
+
+Scale.default = Pvar([Scale.major, Scale.minor],16)
+
+p1 >> play("x-o-", hpf=linvar([0,4000],[32,0]))
+
+pattern1 = P[0, 1, 2, 3]
+pattern2 = P[4, 5, 6, 7]
+
+print(var([pattern1, pattern2], 4))
+
+print(Pvar([pattern1, pattern2], 4))
+
+p1 >> pluck(Pvar([pattern1, pattern2], 4), dur=1/4)
+
+p1 >> pluck(var([pattern1, pattern2], 4), dur=1/4)
+
+# Without a rest, 5 notes (yes, a dur=1 would work, but lets be explicit to counterpoint the next example)
+p1 >> pads([0,1,2,3,4], dur=[1,1,1,1,1], start=4)
+
+# With a rest ... 4 notes and a rest, note "4" is silenced for 4 beats
+p1 >> pads([0,1,2,3,4], dur=[1,1,1,1,rest(4)])
+
+print(Clock.now())
+
+print(Clock.latency)
+print(Clock.mod(32))
+
+var.a = var(Clock.now() + 500)
+print(var.a)
+Clock.schedule(lambda: print(f"future{var.a}"), var.a) 
+
+var.b = var(Clock.now() + 16)
+print(var.b)
+Clock.future(var.a, lambda: print("hello")) 
+
+Clock.future(4, lambda: print("hello"))
+
+# We can call something every n beats
+Clock.every(8, lambda: print("hello"))
+
+def change(a=0):
+    if a == 0:
+        p1 >> pluck(Pvar([pattern1, pattern2], 4), dur=1/4)
+    if a == 4:
+        p1 >> pluck(var([pattern1, pattern2], 4), dur=1/4)
+        
+change()   
+
+Clock.every(64, lambda: change(0))
+Clock.every(25, lambda: change(4))
+
+# You can create your own function, and decorate it, to be able
+# to use it in an .every on a Player object
+@PlayerMethod
+def test(self):
+    print(self.degree)
+
+p1 >> pluck([0,4]).every(4, "test")
+
+# And cancel it with
+p1.never("test")
+
+
+###########################
+# Offsetting the start time
+
+# Another useful trick is offsetting the start time for the var. By
+# default it is when the Clock time is 0 but you can specify a different
+# value using the "start" keyword
+
+print(linvar([0, 1], 8))
+print(linvar([0, 1], 8, start=2))
+
+# This can be combined with Clock.mod() to start a ramp at the start of the
+# next 32 beat cycle:
+
+d1 >> play("x-o-", hpf=linvar([0,4000],[32,inf], start=Clock.mod(32)))
+
+
+
+a = var([0,4,5,3],8)
 p1 >> pads(a, dur=1, amp=0.5).offbeat() + (0,2,4)
 b1 >> bass(a, dur=1/4, sus=1, amp=0.5)
 
