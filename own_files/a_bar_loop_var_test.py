@@ -32,7 +32,10 @@ p1 >> pads([0,1,2,3,4], dur=[1,1,1,1,1], start=4)
 # With a rest ... 4 notes and a rest, note "4" is silenced for 4 beats
 p1 >> pads([0,1,2,3,4], dur=[1,1,1,1,rest(4)])
 
-print(Clock.now())
+# equivalent to:
+p1 >> pads([0,1,2,3,_,_,_,_], dur=[1,1,1,1)
+
+print(Clock.now()/140)
 
 print(Clock.latency)
 print(Clock.mod(32))
@@ -63,11 +66,24 @@ Clock.every(25, lambda: change(4))
 
 # You can create your own function, and decorate it, to be able
 # to use it in an .every on a Player object
+
+var.counter = var(0)
+
+@PlayerMethod
+def tset(self, a = 5):
+    change(a)
+    var.counter += 1
+    print(var.counter)
+
 @PlayerMethod
 def test(self):
     print(self.degree)
 
 p1 >> pluck([0,4]).every(4, "test")
+
+p1 >> pluck([0,4,2]).every(4, "tset", 4)
+
+p2 >> pluck([[0,4,2],(0,2,5)]).every(5, "tset", 0)
 
 # And cancel it with
 p1.never("test")
