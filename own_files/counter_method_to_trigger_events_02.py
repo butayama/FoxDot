@@ -14,6 +14,18 @@ bass_pattern3 = P[0, 2, 5, 5, _, 4, 4, 2]
 
 bass_pattern4 = P[4, 6, _, 4, _, 0, 4, 0]
 
+bass_01_pitch = [_,9,_,9,9,16,12]
+bass_01_dur = [1,0.75,0.25,0.5,0.5,0.5,0.5]
+
+bass_02_pitch = [16,16,11,_,]
+bass_02_dur = [1,1,1.5,0.5]
+
+bass_03_pitch = [16,16,11,11]
+bass_03_dur = [1,1,1,1]
+
+bass_04_pitch = [15,16,16,11,11]
+bass_04_dur = [0.5,0.5,1,1,1]
+
 def lead_change(a=0):
     if a%3 == 0:
         p1 >> nylon(Pvar([lead_pattern1, lead_pattern2], 4), dur=0.5, sus=0.25, oct=5)
@@ -30,7 +42,7 @@ def lead_change(a=0):
         
 def bass_change(a=0):
     if a%3 == 0:
-        p2 >> dub(Pvar([bass_pattern1, bass_pattern2], 4), dur=0.5, oct=4)
+        p2 >> dub(Pvar(bass_01_pitch), dur=bass_01_dur, oct=4)
         # print("bass 3")  
     if a%5 == 0:
         p2 >> soft(Pvar([bass_pattern1.shuffle(), bass_pattern3.shuffle()], 4), dur=1)
