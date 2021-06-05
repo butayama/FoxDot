@@ -1,3 +1,5 @@
+from collections import deque
+
 lead_pattern1 = P[_, 2, _, 5, _, 5, _, 2]
 
 lead_pattern2 = P[_, 4, _, 4, _, 7, _, 7]
@@ -14,21 +16,38 @@ bass_pattern3 = P[0, 2, 5, 5, _, 4, 4, 2]
 
 bass_pattern4 = P[4, 6, _, 4, _, 0, 4, 0]
 
-bass_01_pitch = [_,9,_,9,9,16,12]
-bass_01_dur = [1,0.75,0.25,0.5,0.5,0.5,0.5]
+bass_01_pitch = P[_,9,_,9,9,16,12]
+bass_01_dur = P[1,0.75,0.25,0.5,0.5,0.5,0.5]
 
-bass_02_pitch = [16,16,11,_,]
-bass_02_dur = [1,1,1.5,0.5]
+p1 >> pluck([0, 1, 2, 3, 4, 5, 6, 7]).every(PRand([2, 4, 8]), "reverse")
 
-bass_03_pitch = [16,16,11,11]
-bass_03_dur = [1,1,1,1]
+d1 >> pluck([0, 1, 2, 3, 4, 5, 6, 7]).every(8, "reverse").every(5, "reverse", ident=1)
 
-bass_04_pitch = [15,16,16,11,11]
-bass_04_dur = [0.5,0.5,1,1,1]
+print(P[0, 1, 2, 3, 4, 5, 6, 7][1:2])
+
+l1 = [1, 2]
+l2 = [2, 1]
+l3 = [5, 4]
+l4 = [4, 5]
+
+lol = [[1,2],[2,1],[5,3],[3,5]]
+
+lp1 = [lead_pattern1, lead_pattern2, lead_pattern3, lead_pattern4]
+
+p1 >> nylon(Pvar([lp1[0], lp1[1]], 4), dur=0.5, sus=0.25, oct=5)
+
+bass_02_pitch = P[16,16,11,_,]
+bass_02_dur = P[1,1,1.5,0.5]
+
+bass_03_pitch = P[16,16,11,11]
+bass_03_dur = P[1,1,1,1]
+
+bass_04_pitch = P[15,16,16,11,11]
+bass_04_dur = P[0.5,0.5,1,1,1]
 
 def lead_change(a=0):
     if a%3 == 0:
-        p1 >> nylon(Pvar([lead_pattern1, lead_pattern2], 4), dur=0.5, sus=0.25, oct=5)
+        p1 >> nylon(Pvar([lp1[0], lp1[1]], 4), dur=0.5, sus=0.25, oct=5)
         # print("change 3")
     if a%5 == 0:
         p1 >> star(Pvar([lead_pattern3, lead_pattern4], 4), dur=1, sus=1, oct=5)
@@ -40,19 +59,45 @@ def lead_change(a=0):
         p1 >> bug(Pvar([lead_pattern3, lead_pattern2], 4), dur=0.5, sus=0.5, oct=5)
         print("change 13")        
         
+bass_pitch_pattern = [bass_01_pitch, bass_02_pitch, bass_01_pitch, bass_03_pitch, bass_01_pitch, bass_04_pitch]  
+bass_dur_pattern = [bass_01_dur, bass_02_dur, bass_01_dur, bass_03_dur, bass_01_dur, bass_04_dur]  
+
+print(bass_pitch_pattern)
+
+
+for x in bass_pitch_pattern:
+    print(x)
+    
+print(bass_pitch_pattern[1])
+
+p2 >> dub(bass_pitch_pattern[0], dur=bass_dur_pattern[0], oct=4)
+
+p1 >> bass(var([0,4,5,3],4), dur=2)
+p2 >> pads().follow(p1) + [2,4,7] 
+
+p2 >> pads().follow(b1).every(4, "rotate", 2) + [2, 4, 7]
+
+You could then also do:
+
+p3 >> pluck().follow(p2).every(4, "rotate", 2) + [0, 1, 2, 3]
+
+number = var([1,2,1,3,1,4], 4)
+print(number)
+        
 def bass_change(a=0):
-    if a%3 == 0:
-        p2 >> dub(Pvar(bass_01_pitch), dur=bass_01_dur, oct=4)
-        # print("bass 3")  
-    if a%5 == 0:
-        p2 >> soft(Pvar([bass_pattern1.shuffle(), bass_pattern3.shuffle()], 4), dur=1)
-        # print("bass 5")   
-    if a%7 == 0:
-        p2 >> dbass(Pvar([bass_pattern1.reverse(), bass_pattern4.shuffle()], 4), dur=0.25)
-        # print("bass 7")
-    if a%13 == 0:
-        p2 >> sawbass(Pvar([bass_pattern3.shuffle(), bass_pattern4.reverse()], 4), dur=0.5)
-        # print("bass 13")         
+    if number == 1:
+        p2 >> bass(bass_01_pitch, dur=bass_01_dur, oct=4)
+    elif number == 2:
+        p2 >> bass(bass_02_pitch, dur=bass_02_dur, oct=4)    
+    elif number == 3:
+        p2 >> bass(bass_03_pitch, dur=bass_03_dur, oct=4) 
+    elif number == 4:
+        p2 >> bass(bass_04_pitch, dur=bass_04_dur, oct=4) 
+        
+def bass_change(a=0):
+        p2 >> bass(bass_pitch_pattern[number], dur=bass_dur_pattern[number], oct=4)
+
+
 
 var.counter = var(0)
 var.counter1 = var(2)
@@ -74,6 +119,6 @@ p3 >> play("Xx__").every(4, "test", var.counter)
 p4 >> play("-t-t").every(4, "test0", var.counter1)
 
 # And cancel it with
-p2.never("test")
+p3.never("test")
 
-p1.never("test0")
+p4.never("test0")
