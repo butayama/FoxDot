@@ -150,7 +150,6 @@ def drum_rhythm(a=0):
 
     # open hi-hat
     oh >> play("=", dur=[0.5], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=PStep(8, 1))
-    print(PStep(8, 1))
 
     # snare drum
     if a % 8 != 0:
@@ -216,11 +215,11 @@ piano_group.stop()
 
 lead_pattern1 = P[_, _, (9,12,16), (9,12,16), _, _, (4,7,11), (4,7,11)]
 
-lead_pattern2 = P[_, _, (4,7,11), (4,7,11), _, _, (9,12,16), _]
+lead_pattern2 = P[_, _, (4,7,11), _, _, _, (9,12,16), _]
 
-lead_pattern3 = P[_, _, (9,12,16), _, (4,7,11), _,_]
+lead_pattern3 = P[_, _, (4,7,11), (4,7,11), _, _, (9,12,16), (9,12,16)]
 
-lead_pattern4 = P[_, _, (4,7,11), _, (9,12,16), (9,12,16),_,_]
+lead_pattern4 = P[_, _, (9,12,16), _, _, _, (4,7,11), _]
 
 lp1 = [lead_pattern1, lead_pattern2, lead_pattern3, lead_pattern4]
 
@@ -238,18 +237,18 @@ p1 >> marimba(Pvar([lp1[1], lp1[2]], 8), dur=0.5, sus=0.5, oct=5)
 p1.stop()
 
 def lead_change(a=0):
-    if a%3 == 0:
-        p1 >> prophet(Pvar([lp1[0], lp1[0]], 4), dur=0.5, sus=0.1, oct=5)
-        # print("change 3")
-    if a%5 == 0:
-        p1 >>  prophet(Pvar([lp1[0], lp1[1]], 4), dur=0.5, sus=0.1, oct=5)
-        # print("change 5")
-    if a%7 == 0:
-        p1 >> prophet(Pvar([lp1[0], lp1[2]], 4), dur=0.5, sus=0.1, oct=5)
-        # print("change 7")
-    if a%13 == 0:
-        p1 >> prophet(Pvar([lp1[0], lp1[3]], 4), dur=0.5, sus=0.1, oct=5)
-        print("change 13")        
+    if a == 1:
+        p1 >> prophet([lp1[0], lp1[0]], 4), dur=0.5, sus=0.2, oct=5)
+        # print("change 0")
+    elif a == 9:
+        p1 >> prophet([lp1[1], lp1[1]], 4), dur=0.5, sus=0.2, oct=5)
+        # print("change 8")
+    elif a == 17:
+        p1 >> prophet([lp1[2], lp1[2]], 4), dur=0.5, sus=0.2, oct=5)
+        # print("change 16")
+    elif a == 25:
+        p1 >> prophet([lp1[3], lp1[3]], 4), dur=0.5, sus=0.2, oct=5)
+        # print("change 24")        
 
 
 bass_pattern1 = P[7, 9, 2, 4, _, 7, 2, 2]
@@ -279,8 +278,7 @@ bass_dur_pattern = [bass_01_dur, bass_02_dur, bass_03_dur, bass_04_dur]
 
 
 number = var([0,1,0,2,0,3], 4)
-print(number)
-        
+       
         
 def bass_change(a=0):
     while a == int(number):
@@ -290,49 +288,45 @@ def bass_change(a=0):
         print(a)
         p2 >> bass(bass_pitch_pattern[int(number)], dur=bass_dur_pattern[int(number)], oct=4, amp=0.5)
         
+counter = list(range(1,9))
+count_8_beats = var(counter)
 
-var.counter = var(0)
-var.counter1 = var(0)
-var.counter2 = var(0)
+count_32_beats = var(list(range(1,33)))
+
 
 @PlayerMethod
 def drum(self, a = 0):
-    drum_rhythm(a)
-    var.counter2 += 1
-    print("drum: ", var.counter)
+    drum_group = drum_rhythm(a)
     
-p5 >> play("-t-t", amp=0.3).every(4, "drum", var.counter)
-
-p5.never("drum")
+p5 >> play("_", amp=0.3).every(4, "drum", count_8_beats)
 
 p5.stop()
+drum_group.stop()
 
 
 
 @PlayerMethod
-def test(self, a = 0):
-    lead_change(a)
-    var.counter += 1
-    print("lead: ", var.counter)
+def lead(self, a = 0):
+    lead_group = lead_change(a)
+    print("lead: ", a)
 
 @PlayerMethod
 def test0(self, a = 0):
     bass_change(a)
-    var.counter1 += 1
-    print("bass: ", var.counter1)
 
-p3 >> play("Xx__").every(4, "test", var.counter)
+p3 >> play("_").every(4, "lead", count_32_beats)
 
 p3.stop()
+lead_group.stop()
 
-p4 >> play("-t-t", amp=0.3).every(4, "test0", var.counter1)
+p4 >> play("_").every(4, "test0", count_eight_beats)
 
 p4.stop()
 
 csr()
 nyabinghi_group = nyabinghi()
-drum_group = drum_rhythm()
-piano_group = piano_rhythm()
+# drum_group = drum_rhythm()
+# piano_group = piano_rhythm()
 
 nyabinghi_group.only()
 
@@ -358,5 +352,7 @@ print(Clock)
 p3.never("test")
 
 p4.never("test0")
+
+p5.never("drum")
 
 clock()

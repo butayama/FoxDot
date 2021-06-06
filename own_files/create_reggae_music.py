@@ -4,115 +4,13 @@
 # http://studio.dubroom.org/tutorials-computerdub07.htm
 # THE NYABINGHI RHYTHM
 
+# from ..nyabinghi import nyabinghi
 
 def csr(bpm=140, scale="chromatic",root="C"):
     Clock.bpm = bpm
     Scale.default = scale
     Root.default = root
     return
-
-cl >> play("cc00", dur=1, sample=(0), pan=-0.5,room=0.3, verb=0.3, sus=0.5)
-
-cl.stop()
-
-#  open hi conga
-hc >> play(PEuclid2(1,8,'0','c'), dur=1, sample=(4), pan=-0.55,room=0.5, verb=0.3, sus=0.5)
-
-hc.stop()
-
-# bongo low
-bl >> play("bb00", dur=1, sample=(0), pan=-0.25,room=0.3, verb=0.2, sus=0.5)
-
-bl.stop()
-
-# bongo hi
-bh >> play("[bbb0][b000]0", dur=[1, 1, 6], sample=(0), pan=-0.3,room=0.5, verb=0.2, sus=0.5)
-
-bh.stop()
-
-
-# crash cymba
-cc >> play(PEuclid2(1,16,'0','C'), dur=1, sample=(0), amp=0.2, pan=0.5,room=0.0, verb=0.0, sus=0.2)
-
-cc.stop()
-
-# cowbell
-cb >> play("[T0T0][T000]0", dur=[1, 1, 6], sample=(1), amp=0.1, pan=0.3,room=0.3, verb=0.2, sus=0.5)
-
-cb.stop()
-
-# hi-mid-tom
-ht >> play("00M", dur=[2, 0.6, 1.4], sample=(4), pan=0.2, room=0.5, verb=0.5, sus=2)
-
-ht.stop()
-
-
-# low-mid-tom
-mt >> play("00M0", dur=[3, 5], sample=(1), pan=0.2, room=0.5, verb=0.5, sus=2)
-
-mt.stop()
-
-# open hi-hat
-oh >> play("00=", dur=[0.1, 3.9, 4], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=2)
-
-oh.stop()
-
-# low tom
-lt >> play("0mm0", dur=[0.1, 3.5, 0.4, 4], sample=(0), pan=0.2, room=0.5, verb=0.5, sus=2)
-
-lt.stop()
-
-#  close hi-hat
-ch >> play("00--", dur=1, sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5)
-
-ch.stop()
-
-#  bass drum
-bd >> play("X000", dur=1, sample=(0), pan=0.4, room=0.7, verb=0.7, sus=3)
-
-bd.stop()
-
-
-
-def nyabinghi():
-    #  low conga
-    cl >> play("cc00", dur=1, sample=(0), pan=-0.5,room=0.3, verb=0.3, sus=0.5)
-
-    #  open hi conga
-    hc >> play(PEuclid2(1,8,'0','c'), dur=1, sample=(4), pan=-0.55,room=0.5, verb=0.3, sus=0.5)
-
-    # bongo low
-    bl >> play("bb00", dur=1, sample=(1), pan=-0.25,room=0.3, verb=0.2, sus=0.5)
-
-    # bongo hi
-    bh >> play("[bbb0][b000]0", dur=[1, 1, 6], sample=(0), pan=-0.3,room=0.5, verb=0.2, sus=0.5)
-
-    # crash cymba
-    cc >> play(PEuclid2(1,16,'0','C'), dur=1, sample=(0), amp=0.2, pan=0.5,room=0.0, verb=0.0, sus=0.2)
-
-    # cowbell
-    cb >> play("[T0T0][T000]0", dur=[1, 1, 6], sample=(1), amp=0.1, pan=0.3,room=0.3, verb=0.2, sus=0.5)
-
-    # hi-mid-tom
-    ht >> play("00M", dur=[2, 0.6, 1.4], sample=(4), pan=0.2, room=0.5, verb=0.5, sus=2)
-
-    # low-mid-tom
-    mt >> play("00M0", dur=[3, 5], sample=(1), pan=0.2, room=0.5, verb=0.5, sus=2)
-
-    # open hi-hat
-    oh >> play("00=", dur=[0.1, 3.9, 4], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=2)
-
-    # low tom
-    lt >> play("0mm0", dur=[0.1, 3.5, 0.4, 4], sample=(0), pan=0.2, room=0.5, verb=0.5, sus=2)
-
-    #  close hi-hat
-    ch >> play("00--", dur=1, sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5)
-
-    #  bass drum
-    bd >> play("X000", dur=1, sample=(0), pan=0.4, room=0.7, verb=0.7, sus=3)
-
-    nyabinghi = Group(cl,hc,bl,bh,cc,cb,ht,mt,oh,lt,ch,bd)
-    return nyabinghi
 
 # http://studio.dubroom.org/tutorials-computerdub15.htm
 
@@ -215,11 +113,11 @@ piano_group.stop()
 
 lead_pattern1 = P[_, _, (9,12,16), (9,12,16), _, _, (4,7,11), (4,7,11)]
 
-lead_pattern2 = P[_, _, (4,7,11), (4,7,11), _, _, (9,12,16), _]
+lead_pattern2 = P[_, _, (4,7,11), _, _, _, (9,12,16), _]
 
-lead_pattern3 = P[_, _, (9,12,16), _, (4,7,11), _,_]
+lead_pattern3 = P[_, _, (4,7,11), (4,7,11), _, _, (9,12,16), (9,12,16)]
 
-lead_pattern4 = P[_, _, (4,7,11), _, (9,12,16), (9,12,16),_,_]
+lead_pattern4 = P[_, _, (9,12,16), _, _, _, (4,7,11), _]
 
 lp1 = [lead_pattern1, lead_pattern2, lead_pattern3, lead_pattern4]
 
@@ -236,19 +134,23 @@ p1 >> marimba(Pvar([lp1[1], lp1[2]], 8), dur=0.5, sus=0.5, oct=5)
 
 p1.stop()
 
+p1 >> prophet(lp1[0], sus=0.15, oct=5)
+
 def lead_change(a=0):
-    if a%3 == 0:
-        p1 >> prophet(Pvar([lp1[0], lp1[0]], 4), dur=0.5, sus=0.1, oct=5)
-        # print("change 3")
-    if a%5 == 0:
-        p1 >>  prophet(Pvar([lp1[0], lp1[1]], 4), dur=0.5, sus=0.1, oct=5)
-        # print("change 5")
-    if a%7 == 0:
-        p1 >> prophet(Pvar([lp1[0], lp1[2]], 4), dur=0.5, sus=0.1, oct=5)
-        # print("change 7")
-    if a%13 == 0:
-        p1 >> prophet(Pvar([lp1[0], lp1[3]], 4), dur=0.5, sus=0.1, oct=5)
-        print("change 13")        
+    if a == 1:
+        p1 >> prophet(lp1[0], sus=0.15, oct=5)
+        # print("change 0")
+    elif a == 9:
+        p1 >> prophet(lp1[1], sus=0.15, oct=5)
+        # print("change 8")
+    elif a == 17:
+        p1 >> prophet(lp1[2], sus=0.15, oct=5)
+        # print("change 16")
+    elif a == 25:
+        p1 >> prophet(lp1[3], sus=0.15, oct=5)
+        # print("change 24")     
+    lead_player = Group(p1)    
+    return lead_player       
 
 
 bass_pattern1 = P[7, 9, 2, 4, _, 7, 2, 2]
@@ -278,8 +180,7 @@ bass_dur_pattern = [bass_01_dur, bass_02_dur, bass_03_dur, bass_04_dur]
 
 
 number = var([0,1,0,2,0,3], 4)
-print(number)
-        
+       
         
 def bass_change(a=0):
     while a == int(number):
@@ -289,35 +190,38 @@ def bass_change(a=0):
         print(a)
         p2 >> bass(bass_pitch_pattern[int(number)], dur=bass_dur_pattern[int(number)], oct=4, amp=0.5)
         
+counter = list(range(1,9))
+count_8_beats = var(counter)
 
-counter = var([1,2,3,4,5,6,7,8])
-# var.counter1 = var(0)
-# var.counter2 = var(0)
+count_32_beats = var(list(range(1,33)))
+
 
 @PlayerMethod
 def drum(self, a = 0):
-    drum_rhythm(a)
+    drum_group = drum_rhythm(a)
     
-p5 >> play("_", amp=0.3).every(4, "drum", counter)
+p5 >> play("_", amp=0.3).every(4, "drum", count_8_beats)
 
 p5.stop()
+drum_group.stop()
 
 
 
 @PlayerMethod
-def test(self, a = 0):
-    lead_change(a)
-    print("lead: ", counter)
+def lead(self, a = 0):
+    lead_group = lead_change(a)
+    print("lead: ", a)
 
 @PlayerMethod
 def test0(self, a = 0):
     bass_change(a)
 
-p3 >> play("Xx__").every(4, "test", counter)
+p3 >> play("_").every(4, "lead", count_32_beats)
 
 p3.stop()
+lead_group.stop()
 
-p4 >> play("-t-t", amp=0.3).every(4, "test0", counter)
+p4 >> play("_").every(4, "test0", count_8_beats)
 
 p4.stop()
 

@@ -4,6 +4,8 @@
 # http://studio.dubroom.org/tutorials-computerdub07.htm
 # THE NYABINGHI RHYTHM
 
+from FoxDot import *
+from nyabinghi import nyabinghi
 
 def csr(bpm=140, scale="chromatic",root="C"):
     Clock.bpm = bpm
@@ -11,115 +13,12 @@ def csr(bpm=140, scale="chromatic",root="C"):
     Root.default = root
     return
 
-cl >> play("cc00", dur=1, sample=(0), pan=-0.5,room=0.3, verb=0.3, sus=0.5)
-
-cl.stop()
-
-#  open hi conga
-hc >> play(PEuclid2(1,8,'0','c'), dur=1, sample=(4), pan=-0.55,room=0.5, verb=0.3, sus=0.5)
-
-hc.stop()
-
-# bongo low
-bl >> play("bb00", dur=1, sample=(0), pan=-0.25,room=0.3, verb=0.2, sus=0.5)
-
-bl.stop()
-
-# bongo hi
-bh >> play("[bbb0][b000]0", dur=[1, 1, 6], sample=(0), pan=-0.3,room=0.5, verb=0.2, sus=0.5)
-
-bh.stop()
-
-
-# crash cymba
-cc >> play(PEuclid2(1,16,'0','C'), dur=1, sample=(0), amp=0.2, pan=0.5,room=0.0, verb=0.0, sus=0.2)
-
-cc.stop()
-
-# cowbell
-cb >> play("[T0T0][T000]0", dur=[1, 1, 6], sample=(1), amp=0.1, pan=0.3,room=0.3, verb=0.2, sus=0.5)
-
-cb.stop()
-
-# hi-mid-tom
-ht >> play("00M", dur=[2, 0.6, 1.4], sample=(4), pan=0.2, room=0.5, verb=0.5, sus=2)
-
-ht.stop()
-
-
-# low-mid-tom
-mt >> play("00M0", dur=[3, 5], sample=(1), pan=0.2, room=0.5, verb=0.5, sus=2)
-
-mt.stop()
-
-# open hi-hat
-oh >> play("00=", dur=[0.1, 3.9, 4], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=2)
-
-oh.stop()
-
-# low tom
-lt >> play("0mm0", dur=[0.1, 3.5, 0.4, 4], sample=(0), pan=0.2, room=0.5, verb=0.5, sus=2)
-
-lt.stop()
-
-#  close hi-hat
-ch >> play("00--", dur=1, sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5)
-
-ch.stop()
-
-#  bass drum
-bd >> play("X000", dur=1, sample=(0), pan=0.4, room=0.7, verb=0.7, sus=3)
-
-bd.stop()
-
-
-
-def nyabinghi():
-    #  low conga
-    cl >> play("cc00", dur=1, sample=(0), pan=-0.5,room=0.3, verb=0.3, sus=0.5)
-
-    #  open hi conga
-    hc >> play(PEuclid2(1,8,'0','c'), dur=1, sample=(4), pan=-0.55,room=0.5, verb=0.3, sus=0.5)
-
-    # bongo low
-    bl >> play("bb00", dur=1, sample=(1), pan=-0.25,room=0.3, verb=0.2, sus=0.5)
-
-    # bongo hi
-    bh >> play("[bbb0][b000]0", dur=[1, 1, 6], sample=(0), pan=-0.3,room=0.5, verb=0.2, sus=0.5)
-
-    # crash cymba
-    cc >> play(PEuclid2(1,16,'0','C'), dur=1, sample=(0), amp=0.2, pan=0.5,room=0.0, verb=0.0, sus=0.2)
-
-    # cowbell
-    cb >> play("[T0T0][T000]0", dur=[1, 1, 6], sample=(1), amp=0.1, pan=0.3,room=0.3, verb=0.2, sus=0.5)
-
-    # hi-mid-tom
-    ht >> play("00M", dur=[2, 0.6, 1.4], sample=(4), pan=0.2, room=0.5, verb=0.5, sus=2)
-
-    # low-mid-tom
-    mt >> play("00M0", dur=[3, 5], sample=(1), pan=0.2, room=0.5, verb=0.5, sus=2)
-
-    # open hi-hat
-    oh >> play("00=", dur=[0.1, 3.9, 4], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=2)
-
-    # low tom
-    lt >> play("0mm0", dur=[0.1, 3.5, 0.4, 4], sample=(0), pan=0.2, room=0.5, verb=0.5, sus=2)
-
-    #  close hi-hat
-    ch >> play("00--", dur=1, sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5)
-
-    #  bass drum
-    bd >> play("X000", dur=1, sample=(0), pan=0.4, room=0.7, verb=0.7, sus=3)
-
-    nyabinghi = Group(cl,hc,bl,bh,cc,cb,ht,mt,oh,lt,ch,bd)
-    return nyabinghi
-
 # http://studio.dubroom.org/tutorials-computerdub15.htm
 
 # ___________________________________________________________________________________________________________
 # PROGRAMMING A BASIC DRUM RHYTHM
 # ___________________________________________________________________________________________________________
-
+"""
     #  close hi-hat
 ch >> play("-", dur=0.5, sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=[1, 0.4])
 
@@ -127,6 +26,8 @@ ch.stop()
 
     # open hi-hat
 oh >> play("=", dur=[0.5], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=PStep(8, 1))
+
+print(PStep(8, 1))
 
 oh.stop()
 
@@ -150,7 +51,7 @@ def drum_rhythm(a=0):
     oh >> play("=", dur=[0.5], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=PStep(8, 1))
 
     # snare drum
-    if a != 7:
+    if a % 8 != 0:
         sd >> play("0i", dur=[2.0, 2.0], sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=1)
     else:
         sd >> play("0ii", dur=[0.5,1.5,2.0], sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=1)    
@@ -237,22 +138,21 @@ p1.stop()
 p1 >> prophet(lp1[0], sus=0.15, oct=5)
 
 def lead_change(a=0):
-    if a == 0:
+    if a == 1:
         p1 >> prophet(lp1[0], sus=0.15, oct=5)
         # print("change 0")
-    elif a == 8:
+    elif a == 9:
         p1 >> prophet(lp1[1], sus=0.15, oct=5)
         # print("change 8")
-    elif a == 16:
+    elif a == 17:
         p1 >> prophet(lp1[2], sus=0.15, oct=5)
         # print("change 16")
-    elif a == 24:
+    elif a == 25:
         p1 >> prophet(lp1[3], sus=0.15, oct=5)
         # print("change 24")     
     lead_player = Group(p1)    
     return lead_player       
 
-# lead_change(25)
 
 bass_pattern1 = P[7, 9, 2, 4, _, 7, 2, 2]
 
@@ -288,13 +188,13 @@ def bass_change(a=0):
         pass
     else:    
         a = int(number)
-        # print(a)
+        print(a)
         p2 >> bass(bass_pitch_pattern[int(number)], dur=bass_dur_pattern[int(number)], oct=4, amp=0.5)
         
-counter = list(range(0,8))
+counter = list(range(1,9))
 count_8_beats = var(counter)
 
-count_32_beats = var(list(range(0,32)))
+count_32_beats = var(list(range(1,33)))
 
 
 @PlayerMethod
@@ -306,12 +206,12 @@ p5 >> play("_", amp=0.3).every(4, "drum", count_8_beats)
 p5.stop()
 drum_group.stop()
 
-piano_group = piano_rhythm()
+
 
 @PlayerMethod
 def lead(self, a = 0):
     lead_group = lead_change(a)
-    # print("lead: ", a)
+    print("lead: ", a)
 
 @PlayerMethod
 def test0(self, a = 0):
@@ -322,21 +222,16 @@ p3 >> play("_").every(4, "lead", count_32_beats)
 p3.stop()
 lead_group.stop()
 
-p4 >> play("_").every(4, "test0", count_8_beats)
+p4 >> play("_").every(4, "test0", count_eight_beats)
 
 p4.stop()
 
-nyabinghi_group = nyabinghi()
-
 csr()
 nyabinghi_group = nyabinghi()
-drum_group = drum_rhythm()
-piano_group = piano_rhythm()
-p3 >> play("_").every(4, "lead", count_32_beats)
-p4 >> play("_").every(4, "test0", count_8_beats)
-p5 >> play("_", amp=0.3).every(4, "drum", count_8_beats)
+# drum_group = drum_rhythm()
+# piano_group = piano_rhythm()
 
-yabinghi_group.only()
+nyabinghi_group.only()
 
 drum_group.only()
 
@@ -352,16 +247,22 @@ p1.stop()
 p2.stop()
 p3.stop()
 p4.stop()
-p5.stop()
 
 print(Clock)
 
 
 # And cancel it with
-p3.never("lead")
+p3.never("test")
 
 p4.never("test0")
 
 p5.never("drum")
 
 clock()
+
+"""
+
+if __name__ == "__main__":
+    csr()
+    nyabinghi()
+    Go()
