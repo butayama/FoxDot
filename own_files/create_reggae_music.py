@@ -127,12 +127,15 @@ ch.stop()
 
     # open hi-hat
 oh >> play("=", dur=[0.5], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=PStep(8, 1))
+
 print(PStep(8, 1))
 
 oh.stop()
 
     # snare drum
 sd >> play("0i", dur=[2.0, 2.0], sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=1)
+
+sd >> play("0ii", dur=[0.5,1.5,2.0], sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=1)  
 
 sd.stop()
 
@@ -141,16 +144,18 @@ kd >> play("XXxXXx", dur=[2.0, 1.5, 0.5, 2.0, 1, 1], sample=(1), pan=0.45, room=
 
 kd.stop()
 
-def drum_rhythm():
+def drum_rhythm(a=0):
     #  close hi-hat
     ch >> play("-", dur=0.5, sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=[1, 0.4])
 
     # open hi-hat
     oh >> play("=", dur=[0.5], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=PStep(8, 1))
-    print(PStep(8, 1))
 
     # snare drum
-    sd >> play("0i", dur=[2.0, 2.0], sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=1)
+    if a % 8 != 0:
+        sd >> play("0i", dur=[2.0, 2.0], sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=1)
+    else:
+        sd >> play("0ii", dur=[0.5,1.5,2.0], sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=1)    
 
     # kick drum
     kd >> play("XXxXXx", dur=[2.0, 1.5, 0.5, 2.0, 1, 1], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=[1])
@@ -162,6 +167,15 @@ def drum_rhythm():
 # PROGRAMMING A BASSLINE ON TWO PIANO CHORDS
 # ___________________________________________________________________________________________________________
 
+    # melodic A Chord (piano synth is not recognized)
+pa >> prophet([_,(9,12,16),_,(9,12,16),_,_], dur=[rest(1),0.25,rest(1.75),0.25,rest(0.75),rest(4)], oct=5, pan=-0.2, room=0.5, verb=0.5, sus=0.15, amp=[2])
+
+pa.stop()
+
+    # melodic E Chord (piano synth is not recognized)
+pe >> prophet([_,(4,7,11),_,(4,7,11),_], dur=[rest(5),0.25,rest(1.75),0.25,rest(0.75)], oct=5, pan=-0.2, room=0.5, verb=0.5, sus=0.15, amp=[2])
+
+pe.stop()
 
 def piano_rhythm():
     # melodic A Chord (piano synth is not recognized)
@@ -274,36 +288,43 @@ def bass_change(a=0):
         a = int(number)
         print(a)
         p2 >> bass(bass_pitch_pattern[int(number)], dur=bass_dur_pattern[int(number)], oct=4, amp=0.5)
+        
+
+counter = var([1,2,3,4,5,6,7,8])
+# var.counter1 = var(0)
+# var.counter2 = var(0)
+
+@PlayerMethod
+def drum(self, a = 0):
+    drum_rhythm(a)
+    
+p5 >> play("_", amp=0.3).every(4, "drum", counter)
+
+p5.stop()
 
 
-
-var.counter = var(0)
-var.counter1 = var(0)
 
 @PlayerMethod
 def test(self, a = 0):
     lead_change(a)
-    var.counter += 1
-    print("lead: ", var.counter)
+    print("lead: ", counter)
 
 @PlayerMethod
 def test0(self, a = 0):
     bass_change(a)
-    var.counter1 += 1
-    print("bass: ", var.counter1)
 
-p3 >> play("Xx__").every(4, "test", var.counter)
+p3 >> play("Xx__").every(4, "test", counter)
 
 p3.stop()
 
-p4 >> play("-t-t", amp=0.3).every(4, "test0", var.counter1)
+p4 >> play("-t-t", amp=0.3).every(4, "test0", counter)
 
 p4.stop()
 
 csr()
 nyabinghi_group = nyabinghi()
-drum_group = drum_rhythm()
-piano_group = piano_rhythm()
+# drum_group = drum_rhythm()
+# piano_group = piano_rhythm()
 
 nyabinghi_group.only()
 
@@ -329,5 +350,7 @@ print(Clock)
 p3.never("test")
 
 p4.never("test0")
+
+p5.never("drum")
 
 clock()

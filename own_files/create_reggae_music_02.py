@@ -10,9 +10,6 @@ def csr(bpm=140, scale="chromatic",root="C"):
     Scale.default = scale
     Root.default = root
     return
-    
-var.counter = var(0)
-var.counter1 = var(0)
 
 cl >> play("cc00", dur=1, sample=(0), pan=-0.5,room=0.3, verb=0.3, sus=0.5)
 
@@ -140,8 +137,6 @@ sd >> play("0i", dur=[2.0, 2.0], sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0
 
 sd >> play("0ii", dur=[0.5,1.5,2.0], sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=1)  
 
-sd.every(4, "stutter", 4)
-
 sd.stop()
 
     # kick drum
@@ -149,7 +144,7 @@ kd >> play("XXxXXx", dur=[2.0, 1.5, 0.5, 2.0, 1, 1], sample=(1), pan=0.45, room=
 
 kd.stop()
 
-def drum_rhythm():
+def drum_rhythm(a=0):
     #  close hi-hat
     ch >> play("-", dur=0.5, sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=[1, 0.4])
 
@@ -158,7 +153,7 @@ def drum_rhythm():
     print(PStep(8, 1))
 
     # snare drum
-    if var.counter % 8 == 0:
+    if a % 8 != 0:
         sd >> play("0i", dur=[2.0, 2.0], sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=1)
     else:
         sd >> play("0ii", dur=[0.5,1.5,2.0], sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=1)    
@@ -294,12 +289,25 @@ def bass_change(a=0):
         a = int(number)
         print(a)
         p2 >> bass(bass_pitch_pattern[int(number)], dur=bass_dur_pattern[int(number)], oct=4, amp=0.5)
+        
+
+var.counter = var(0)
+var.counter1 = var(0)
+var.counter2 = var(0)
 
 @PlayerMethod
-def test(self, a = 0):
-    lead_change(a)
-    var.counter += 1
-    print("lead: ", var.counter)
+def drum(self, a = 0):
+    drum_rhythm(a)
+    var.counter2 += 1
+    print("drum: ", var.counter)
+    
+p5 >> play("-t-t", amp=0.3).every(4, "drum", var.counter)
+
+p5.never("drum")
+
+p5.stop()
+
+
 
 @PlayerMethod
 def test(self, a = 0):
