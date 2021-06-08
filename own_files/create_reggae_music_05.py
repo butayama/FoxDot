@@ -11,69 +11,6 @@ def csr(bpm=140, scale="chromatic",root="C"):
     Root.default = root
     return
 
-cl >> play("cc00", dur=1, sample=(0), pan=-0.5,room=0.3, verb=0.3, sus=0.5)
-
-cl.stop()
-
-#  open hi conga
-hc >> play(PEuclid2(1,8,'0','c'), dur=1, sample=(4), pan=-0.55,room=0.5, verb=0.3, sus=0.5)
-
-hc.stop()
-
-# bongo low
-bl >> play("bb00", dur=1, sample=(0), pan=-0.25,room=0.3, verb=0.2, sus=0.5)
-
-bl.stop()
-
-# bongo hi
-bh >> play("[bbb0][b000]0", dur=[1, 1, 6], sample=(0), pan=-0.3,room=0.5, verb=0.2, sus=0.5)
-
-bh.stop()
-
-
-# crash cymba
-cc >> play(PEuclid2(1,16,'0','C'), dur=1, sample=(0), amp=0.2, pan=0.5,room=0.0, verb=0.0, sus=0.2)
-
-cc.stop()
-
-# cowbell
-cb >> play("[T0T0][T000]0", dur=[1, 1, 6], sample=(1), amp=0.1, pan=0.3,room=0.3, verb=0.2, sus=0.5)
-
-cb.stop()
-
-# hi-mid-tom
-ht >> play("00M", dur=[2, 0.6, 1.4], sample=(4), pan=0.2, room=0.5, verb=0.5, sus=2)
-
-ht.stop()
-
-
-# low-mid-tom
-mt >> play("00M0", dur=[3, 5], sample=(1), pan=0.2, room=0.5, verb=0.5, sus=2)
-
-mt.stop()
-
-# open hi-hat
-oh >> play("00=", dur=[0.1, 3.9, 4], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=2)
-
-oh.stop()
-
-# low tom
-lt >> play("0mm0", dur=[0.1, 3.5, 0.4, 4], sample=(0), pan=0.2, room=0.5, verb=0.5, sus=2)
-
-lt.stop()
-
-#  close hi-hat
-ch >> play("00--", dur=1, sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5)
-
-ch.stop()
-
-#  bass drum
-bd >> play("X000", dur=1, sample=(0), pan=0.4, room=0.7, verb=0.7, sus=3)
-
-bd.stop()
-
-
-
 def nyabinghi():
     #  low conga
     cl >> play("cc00", dur=1, sample=(0), pan=-0.5,room=0.3, verb=0.3, sus=0.5)
@@ -120,28 +57,6 @@ def nyabinghi():
 # PROGRAMMING A BASIC DRUM RHYTHM
 # ___________________________________________________________________________________________________________
 
-    #  close hi-hat
-ch >> play("-", dur=0.5, sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=[1, 0.4])
-
-ch.stop()
-
-    # open hi-hat
-oh >> play("=", dur=[0.5], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=PStep(8, 1))
-
-oh.stop()
-
-    # snare drum
-sd >> play("0i", dur=[2.0, 2.0], sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=1)
-
-sd >> play("0ii", dur=[0.5,1.5,2.0], sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=1)  
-
-sd.stop()
-
-    # kick drum
-kd >> play("XXxXXx", dur=[2.0, 1.5, 0.5, 2.0, 1, 1], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=[1])
-
-kd.stop()
-
 def drum_rhythm(a=0):
     #  close hi-hat
     ch >> play("-", dur=0.5, sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=[1, 0.4])
@@ -165,103 +80,34 @@ def drum_rhythm(a=0):
 # PROGRAMMING A BASSLINE ON TWO PIANO CHORDS
 # ___________________________________________________________________________________________________________
 
-    # melodic A Chord (piano synth is not recognized)
-pa >> prophet([_,(9,12,16),_,(9,12,16),_,_], dur=[rest(1),0.25,rest(1.75),0.25,rest(0.75),rest(4)], oct=5, pan=-0.2, room=0.5, verb=0.5, sus=0.15, amp=[2])
-
-pa.stop()
-
-    # melodic E Chord (piano synth is not recognized)
-pe >> prophet([_,(4,7,11),_,(4,7,11),_], dur=[rest(5),0.25,rest(1.75),0.25,rest(0.75)], oct=5, pan=-0.2, room=0.5, verb=0.5, sus=0.15, amp=[2])
-
-pe.stop()
-
 def piano_rhythm():
     # melodic A Chord (piano synth is not recognized)
-    pa >> prophet([_,(9,12,16),_,(9,12,16),_,_], dur=[rest(1),0.25,rest(1.75),0.25,rest(0.75),rest(4)], oct=5, pan=-0.2, room=0.5, verb=0.5, sus=0.15, amp=[2])
+    pa >> prophet([_,(9,12,16),_,(9,12,16),_,_], dur=[rest(1),0.25,rest(1.75),0.25,rest(0.75),rest(4)], oct=5, pan=-0.2, room=0.5, verb=0.5, sus=0.15, amp=[0.8])
     # melodic E Chord (piano synth is not recognized)
-    pe >> prophet([_,(4,7,11),_,(4,7,11),_], dur=[rest(5),0.25,rest(1.75),0.25,rest(0.75)], oct=5, pan=-0.2, room=0.5, verb=0.5, sus=0.15, amp=[2])
+    pe >> prophet([_,(4,7,11),_,(4,7,11),_], dur=[rest(5),0.25,rest(1.75),0.25,rest(0.75)], oct=5, pan=-0.2, room=0.5, verb=0.5, sus=0.15, amp=[0.8])
     piano_rhythm = Group(pa, pe)
     return piano_rhythm
     
-bass_01 = Player()
-bass_02 = Player()
-bass_03 = Player()
-bass_04 = Player()
+lead_pattern_C_1 = P[(0,4,9), _, (0,4,9), _, _, _, (0,4,9), _]
+lead_pattern_B_2 = P[_, _, (-1,4,7), _, _, _, (-1,4,7), _]
+lead_pattern_C_3 = P[_, _, (0,4,9), _, _, _, (0,4,9), _]
+lead_pattern_B_4 = P[_, _, (-1,4,7), _, (4,7,11), _, (-1,4,7), _]
+lead_pattern_B_8 = P[_, _, (-1,4,7), _, (4,7,11), (4,7,11), (-1,4,7), _]
 
-bass_01_pitch = [_,9,_,9,9,16,12]
-bass_01_dur = [1,0.75,0.25,0.5,0.5,0.5,0.5]
-
-bass_02_pitch = [16,16,11,_,]
-bass_02_dur = [1,1,1.5,0.5]
-
-bass_03_pitch = [16,16,11,11]
-bass_03_dur = [1,1,1,1]
-
-bass_04_pitch = [15,16,16,11,11]
-bass_04_dur = [0.5,0.5,1,1,1]
+lp1 = [lead_pattern_C_1, lead_pattern_B_2, lead_pattern_C_3, lead_pattern_B_4, lead_pattern_C_3, lead_pattern_B_2, lead_pattern_C_3, lead_pattern_B_8]
 
 csr()
-nyabinghi_group = nyabinghi()
-drum_group = drum_rhythm()
-piano_group = piano_rhythm()
 
-piano_group.stop()
+p1 >> charm(lp1[int(var.counter)], dur=0.5, sus=[0.15, 0.15], oct=4, amp=1)
 
-# c1 >> bass(bass_01_pitch + bass_02_pitch + bass_01_pitch + bass_03_pitch + bass_01_pitch + bass_02_pitch + bass_01_pitch + bass_04_pitch, dur=bass_01_dur + bass_02_dur + bass_01_dur + bass_03_dur + bass_01_dur + bass_02_dur + bass_01_dur + bass_04_dur, oct=4, pan=0.3, room=0.1, verb=0.1, sus=bass_01_dur + bass_02_dur + bass_01_dur + bass_03_dur + bass_01_dur + bass_02_dur + bass_01_dur + bass_04_dur, amp=1)
-
-# c1.stop()
-
-lead_pattern1 = P[_, _, (9,12,16), (9,12,16), _, _, (4,7,11), (4,7,11)]
-
-lead_pattern2 = P[_, _, (4,7,11), _, _, _, (9,12,16), _]
-
-lead_pattern3 = P[_, _, (4,7,11), (4,7,11), _, _, (9,12,16), (9,12,16)]
-
-lead_pattern4 = P[_, _, (9,12,16), _, _, _, (4,7,11), _]
-
-lp1 = [lead_pattern1, lead_pattern2, lead_pattern3, lead_pattern4]
-
-p1 >> marimba(Pvar([lp1[0], lp1[1]], 4), dur=0.5, sus=0.25, oct=5)
-
-
-p1 >> marimba(Pvar([lp1[0], lp1[1]], 8), dur=0.5, sus=0.25, oct=5)
-
-p1 >> star(Pvar([lp1[2], lp1[3]], 8), dur=0.5, sus=1, oct=5)
-
-p1 >>   saw(Pvar([lp1[3], lp1[1]], 8), dur=0.5, sus=0.25, oct=5)
-
-p1 >> marimba(Pvar([lp1[1], lp1[2]], 8), dur=0.5, sus=0.5, oct=5)
+p1 >> snick(lp1[int(var.counter)], dur=0.5, sus=[0.15, 0.15], oct=4, amp=1)
 
 p1.stop()
-
-p1 >> prophet(lp1[0], sus=0.15, oct=5)
-
+    
 def lead_change(a=0):
-    if a == 0:
-        p1 >> prophet(lp1[0], sus=0.15, oct=5)
-        # print("change 0")
-    elif a == 8:
-        p1 >> prophet(lp1[1], sus=0.15, oct=5)
-        # print("change 8")
-    elif a == 16:
-        p1 >> prophet(lp1[2], sus=0.15, oct=5)
-        # print("change 16")
-    elif a == 24:
-        p1 >> prophet(lp1[3], sus=0.15, oct=5)
-        # print("change 24")     
-    lead_player = Group(p1)    
-    return lead_player       
-
-# lead_change(25)
-
-bass_pattern1 = P[7, 9, 2, 4, _, 7, 2, 2]
-
-bass_pattern2 = P[4, 9, _, 4, _, 7, 6, 2]
-
-bass_pattern3 = P[0, 2, 5, 5, _, 4, 4, 2]
-
-bass_pattern4 = P[4, 6, _, 4, _, 0, 4, 0]
-
+    print(int(var.counter))
+    p1 >> charm(lp1[int(var.counter)], dur=0.5, pan=0.35, room=0.5, verb=0.5, sus=0.15, oct=4, amp=1.5)
+    return
 
 bass_01_pitch = P[_,9,_,9,9,16,12]
 bass_01_dur = P[1,0.75,0.25,0.5,0.5,0.5,0.5]
@@ -289,65 +135,74 @@ def bass_change(a=0):
     else:    
         a = int(number)
         # print(a)
-        p2 >> bass(bass_pitch_pattern[int(number)], dur=bass_dur_pattern[int(number)], oct=4, amp=0.5)
-        
-counter = list(range(0,8))
-count_8_beats = var(counter)
+        p2 >> bass(bass_pitch_pattern[int(number)], dur=bass_dur_pattern[int(number)], oct=4, amp=0.4)
+    bass_player = Group(p2)    
+    return bass_player    
 
+        
+var.counter = var(list(range(0,8)))
+var.counter1 = var(0)
+count_8_beats = var(var.counter)
 count_32_beats = var(list(range(0,32)))
 
-
 @PlayerMethod
-def drum(self, a = 0):
+def drum_loop(self, a = 0):
     drum_group = drum_rhythm(a)
-    
-p5 >> play("_", amp=0.3).every(4, "drum", count_8_beats)
-
-p5.stop()
-drum_group.stop()
-
-piano_group = piano_rhythm()
 
 @PlayerMethod
-def lead(self, a = 0):
+def lead_loop(self, a = 0):
     lead_group = lead_change(a)
-    # print("lead: ", a)
+    print("lead_loop: ", a)
 
 @PlayerMethod
-def test0(self, a = 0):
-    bass_change(a)
-
-p3 >> play("_").every(4, "lead", count_32_beats)
-
-p3.stop()
-lead_group.stop()
-
-p4 >> play("_").every(4, "test0", count_8_beats)
-
-p4.stop()
-
-nyabinghi_group = nyabinghi()
-
+def bass_loop(self, a = 0):
+    bass_group = bass_change(a)
+    var.counter1 += 1
+    # print("bass_loop: ", var.counter1)
+    
+# _______________________________________________________________________________________________________
+# start playing
+# _______________________________________________________________________________________________________
 csr()
 nyabinghi_group = nyabinghi()
-drum_group = drum_rhythm()
 piano_group = piano_rhythm()
-p3 >> play("_").every(4, "lead", count_32_beats)
-p4 >> play("_").every(4, "test0", count_8_beats)
-p5 >> play("_", amp=0.3).every(4, "drum", count_8_beats)
+p3 >> play("_").every(4, "lead_loop", 0)
+lead_group = Group(p3)
+p4 >> play("_").every(4, "bass_loop", var.counter1)
+bass_group = Group(p4)
+p5 >> play("_", amp=0.3).every(4, "drum_loop", count_8_beats)
+drum_group = Group(p5)
+drum_bass_group = Group(p4, p5)
+drum_bass_piano_group = Group(p4, p5, pa, pe)
+# _______________________________________________________________________________________________________
+# only playing
+# _______________________________________________________________________________________________________
 
-yabinghi_group.only()
-
+nyabinghi_group.only()
 drum_group.only()
-
 piano_group.only()
+lead_group.only()
+bass_group.only()
+drum_group.only()
+drum_bass_group.only()
+drum_bass_piano_group.only()
+
+# _______________________________________________________________________________________________________
+# Concel functions
+# _______________________________________________________________________________________________________
+p3.never("lead")
+
+p4.never("bass")
+
+p5.never("drum")
+
+# _______________________________________________________________________________________________________
+# Stop playing
+# _______________________________________________________________________________________________________
 
 nyabinghi_group.stop()
-
 drum_group.stop()
-
 piano_group.stop()
-
 p1.stop()
 p2.stop()
 p3.stop()
@@ -355,13 +210,3 @@ p4.stop()
 p5.stop()
 
 print(Clock)
-
-
-# And cancel it with
-p3.never("lead")
-
-p4.never("test0")
-
-p5.never("drum")
-
-clock()

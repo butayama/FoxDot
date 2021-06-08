@@ -98,24 +98,13 @@ lp1 = [lead_pattern_C_1, lead_pattern_B_2, lead_pattern_C_3, lead_pattern_B_4, l
 
 csr()
 
-p1 >> prophet([lp1, 4], dur=0.5, sus=[0.15, 0.15], oct=4)
-
-p1 >> prophet(lead_pattern_B_2, dur=0.5, sus=[0.15, 0.1], oct=4)
-
-p1 >> prophet(lead_pattern1a, dur=0.5, sus=[0.15, 0.1], oct=5)
-
-p1 >> prophet(lead_pattern1, sus=[0.15, 0.1], oct=5)
 
 p1.stop()
     
 def lead_change(a=0):
-        print(a)
-        p1 >> prophet(lp1[a], dur=0.5, sus=[0.15, 0.15], oct=4, amp=1)
-
-      
-   
-    lead_player = Group(p1)    
-    return lead_player
+    print(int(var.counter))
+    p1 >> prophet(lp1[int(var.counter)], dur=0.5, sus=[0.15, 0.15], oct=4, amp=1)
+    return
 
 bass_01_pitch = P[_,9,_,9,9,16,12]
 bass_01_dur = P[1,0.75,0.25,0.5,0.5,0.5,0.5]
@@ -150,17 +139,17 @@ def bass_change(a=0):
         
 var.counter = var(list(range(0,8)))
 var.counter1 = var(0)
-count_8_beats = var(counter)
+count_8_beats = var(var.counter)
 count_32_beats = var(list(range(0,32)))
 
 @PlayerMethod
-def drum(self, a = 0):
+def drum_loop(self, a = 0):
     drum_group = drum_rhythm(a)
 
 @PlayerMethod
-def lead(self, a = 0):
+def lead_loop(self, a = 0):
     lead_group = lead_change(a)
-    # print("lead: ", a)
+    print("lead_loop: ", a)
 
 @PlayerMethod
 def bass_loop(self, a = 0):
@@ -174,11 +163,11 @@ def bass_loop(self, a = 0):
 csr()
 nyabinghi_group = nyabinghi()
 piano_group = piano_rhythm()
-p3 >> play("_").every(4, "lead", int(var.counter))
+p3 >> play("_").every(4, "lead_loop", 0)
 lead_group = Group(p3)
 p4 >> play("_").every(4, "bass_loop", var.counter1)
 bass_group = Group(p4)
-p5 >> play("_", amp=0.3).every(4, "drum", count_8_beats)
+p5 >> play("_", amp=0.3).every(4, "drum_loop", count_8_beats)
 drum_group = Group(p5)
 drum_bass_group = Group(p4, p5)
 drum_bass_piano_group = Group(p4, p5, pa, pe)

@@ -82,32 +82,27 @@ def drum_rhythm(a=0):
 
 def piano_rhythm():
     # melodic A Chord (piano synth is not recognized)
-    pa >> prophet([_,(9,12,16),_,(9,12,16),_,_], dur=[rest(1),0.25,rest(1.75),0.25,rest(0.75),rest(4)], oct=5, pan=-0.2, room=0.5, verb=0.5, sus=0.15, amp=[2])
+    pa >> prophet([_,(9,12,16),_,(9,12,16),_,_], dur=[rest(1),0.25,rest(1.75),0.25,rest(0.75),rest(4)], oct=5, pan=-0.2, room=0.5, verb=0.5, sus=0.15, amp=[0.8])
     # melodic E Chord (piano synth is not recognized)
-    pe >> prophet([_,(4,7,11),_,(4,7,11),_], dur=[rest(5),0.25,rest(1.75),0.25,rest(0.75)], oct=5, pan=-0.2, room=0.5, verb=0.5, sus=0.15, amp=[2])
+    pe >> prophet([_,(4,7,11),_,(4,7,11),_], dur=[rest(5),0.25,rest(1.75),0.25,rest(0.75)], oct=5, pan=-0.2, room=0.5, verb=0.5, sus=0.15, amp=[0.8])
     piano_rhythm = Group(pa, pe)
     return piano_rhythm
     
+lead_pattern_C_1 = P[(0,4,9), _, (0,4,9), _, _, _, (0,4,9), _]
+lead_pattern_B_2 = P[_, _, (-1,4,7), _, _, _, (-1,4,7), _]
+lead_pattern_C_3 = P[_, _, (0,4,9), _, _, _, (0,4,9), _]
+lead_pattern_B_4 = P[_, _, (-1,4,7), _, (4,7,11), _, (-1,4,7), _]
+lead_pattern_B_8 = P[_, _, (-1,4,7), _, (4,7,11), (4,7,11), (-1,4,7), _]
+
+lp1 = [lead_pattern_C_1, lead_pattern_B_2, lead_pattern_C_3, lead_pattern_B_4, lead_pattern_C_3, lead_pattern_B_2, lead_pattern_C_3, lead_pattern_B_8]
+
+csr()
+
+   
 def lead_change(a=0):
-    lead_pattern1 = P[_, _, (9,12,16), (9,12,16), _, _, (4,7,11), (4,7,11)]
-    lead_pattern2 = P[_, _, (4,7,11), _, _, _, (9,12,16), _]
-    lead_pattern3 = P[_, _, (4,7,11), (4,7,11), _, _, (9,12,16), (9,12,16)]
-    lead_pattern4 = P[_, _, (9,12,16), _, _, _, (4,7,11), _]
-    lp1 = [lead_pattern1, lead_pattern2, lead_pattern3, lead_pattern4]
-    if a == 0:
-        p1 >> prophet(lp1[0], sus=0.15, oct=5)
-        # print("change 0")
-    elif a == 8:
-        p1 >> prophet(lp1[1], sus=0.15, oct=5)
-        # print("change 8")
-    elif a == 16:
-        p1 >> prophet(lp1[2], sus=0.15, oct=5)
-        # print("change 16")
-    elif a == 24:
-        p1 >> prophet(lp1[3], sus=0.15, oct=5)
-        # print("change 24")     
-    lead_player = Group(p1)    
-    return lead_player
+    print(int(var.counter))
+    p1 >> charm(lp1[int(var.counter)], dur=0.5, pan=0.35, room=0.5, verb=0.5, sus=0.15, oct=4, amp=1.5)
+    return
 
 bass_01_pitch = P[_,9,_,9,9,16,12]
 bass_01_dur = P[1,0.75,0.25,0.5,0.5,0.5,0.5]
@@ -135,38 +130,42 @@ def bass_change(a=0):
     else:    
         a = int(number)
         # print(a)
-        p2 >> bass(bass_pitch_pattern[int(number)], dur=bass_dur_pattern[int(number)], oct=4, amp=0.8)
+        p2 >> bass(bass_pitch_pattern[int(number)], dur=bass_dur_pattern[int(number)], oct=4, amp=0.9, pan=-0.6, room=0.1, verb=0.9, sus=0.9)
     bass_player = Group(p2)    
     return bass_player    
 
         
-counter = list(range(0,8))
+var.counter = var(list(range(0,8)))
 var.counter1 = var(0)
-count_8_beats = var(counter)
+count_8_beats = var(var.counter)
 count_32_beats = var(list(range(0,32)))
 
 @PlayerMethod
-def drum(self, a = 0):
+def drum_loop(self, a = 0):
     drum_group = drum_rhythm(a)
 
 @PlayerMethod
-def lead(self, a = 0):
+def lead_loop(self, a = 0):
     lead_group = lead_change(a)
-    # print("lead: ", a)
+    print("lead_loop: ", a)
 
 @PlayerMethod
 def bass_loop(self, a = 0):
     bass_group = bass_change(a)
     var.counter1 += 1
     # print("bass_loop: ", var.counter1)
-
+    
+# _______________________________________________________________________________________________________
+# start playing
+# _______________________________________________________________________________________________________
+csr()
 nyabinghi_group = nyabinghi()
 piano_group = piano_rhythm()
-p3 >> play("_").every(4, "lead", count_32_beats)
+p3 >> play("_").every(4, "lead_loop", 0)
 lead_group = Group(p3)
 p4 >> play("_").every(4, "bass_loop", var.counter1)
 bass_group = Group(p4)
-p5 >> play("_", amp=0.3).every(4, "drum", count_8_beats)
+p5 >> play("_", amp=0.3).every(4, "drum_loop", count_8_beats)
 drum_group = Group(p5)
 drum_bass_group = Group(p4, p5)
 drum_bass_piano_group = Group(p4, p5, pa, pe)
