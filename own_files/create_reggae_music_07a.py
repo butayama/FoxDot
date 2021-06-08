@@ -134,10 +134,8 @@ def bass_change(a=0):
         pass
     else:    
         a = int(number)
-        # print(a)
-        p2 >> bass(bass_pitch_pattern[int(number)], dur=bass_dur_pattern[int(number)], oct=4, amp=0.8)
-    bass_player = Group(p2)    
-    return bass_player    
+        print(a)
+        p2 >> bass(bass_pitch_pattern[int(number)], dur=bass_dur_pattern[int(number)], oct=4, amp=0.5)
 
         
 counter = list(range(0,8))
@@ -155,21 +153,17 @@ def lead(self, a = 0):
     # print("lead: ", a)
 
 @PlayerMethod
-def bass_loop(self, a = 0):
-    bass_group = bass_change(a)
+def bass(self, a = 0):
+    bass_change(a)
     var.counter1 += 1
-    # print("bass_loop: ", var.counter1)
+    print("bass: ", var.counter1)
 
 nyabinghi_group = nyabinghi()
 piano_group = piano_rhythm()
 p3 >> play("_").every(4, "lead", count_32_beats)
-lead_group = Group(p3)
-p4 >> play("_").every(4, "bass_loop", var.counter1)
-bass_group = Group(p4)
+p4 >> play("_").every(4, "bass", count_8_beats)
 p5 >> play("_", amp=0.3).every(4, "drum", count_8_beats)
-drum_group = Group(p5)
-drum_bass_group = Group(p4, p5)
-drum_bass_piano_group = Group(p4, p5, pa, pe)
+
 # _______________________________________________________________________________________________________
 # only playing
 # _______________________________________________________________________________________________________
@@ -180,8 +174,6 @@ piano_group.only()
 lead_group.only()
 bass_group.only()
 drum_group.only()
-drum_bass_group.only()
-drum_bass_piano_group.only()
 
 # _______________________________________________________________________________________________________
 # Concel functions
