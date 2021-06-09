@@ -1,4 +1,3 @@
-
 # https://foxdot.org/docs/player-attributes/
 
 
@@ -7,7 +6,12 @@
 
 # include files:
 # https://stackoverflow.com/questions/714881/how-to-include-external-python-code-to-use-in-other-files
-with open('/home/uwe/PycharmProjects/FoxDot/own_files/include_test.py') as f: exec(f.read())
+
+# Windows:
+with open(r'E:\GitHub\FoxDot\own_files\nyabinghi.py') as f: exec(f.read())
+
+# Debian:
+# with open('/home/uwe/PycharmProjects/FoxDot/own_files/include_test.py') as f: exec(f.read())    
 
 # include_message("Include function text from include_test loaded")
 # print(message)
@@ -18,52 +22,15 @@ def csr(bpm=140, scale="chromatic",root="C"):
     Root.default = root
     return
 
-def nyabinghi_rhythm():
-    #  low conga
-    cl >> play("cc00", dur=1, sample=(0), pan=-0.5,room=0.3, verb=0.3, sus=0.5)
-
-    #  open hi conga
-    hc >> play(PEuclid2(1,8,'0','c'), dur=1, sample=(4), pan=-0.55,room=0.5, verb=0.3, sus=0.5)
-
-    # bongo low
-    bl >> play("bb00", dur=1, sample=(1), pan=-0.25,room=0.3, verb=0.2, sus=0.5)
-
-    # bongo hi
-    bh >> play("[bbb0][b000]0", dur=[1, 1, 6], sample=(0), pan=-0.3,room=0.5, verb=0.2, sus=0.5)
-
-    # crash cymba
-    cc >> play(PEuclid2(1,16,'0','C'), dur=1, sample=(0), amp=0.2, pan=0.5,room=0.0, verb=0.0, sus=0.2)
-
-    # cowbell
-    cb >> play("[T0T0][T000]0", dur=[1, 1, 6], sample=(1), amp=0.1, pan=0.3,room=0.3, verb=0.2, sus=0.5)
-
-    # hi-mid-tom
-    ht >> play("00M", dur=[2, 0.6, 1.4], sample=(4), pan=0.2, room=0.5, verb=0.5, sus=2)
-
-    # low-mid-tom
-    mt >> play("00M0", dur=[3, 5], sample=(1), pan=0.2, room=0.5, verb=0.5, sus=2)
-
-    # open hi-hat
-    oh >> play("00=", dur=[0.1, 3.9, 4], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=2)
-
-    # low tom
-    lt >> play("0mm0", dur=[0.1, 3.5, 0.4, 4], sample=(0), pan=0.2, room=0.5, verb=0.5, sus=2)
-
-    # close hi-hat
-    ch >> play("00--", dur=1, sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5)
-
-    #  bass drum
-    bd >> play("X000", dur=1, sample=(0), pan=0.4, room=0.7, verb=0.7, sus=3)
-    return
 
 # http://studio.dubroom.org/tutorials-computerdub15.htm
-
 # ___________________________________________________________________________________________________________
 # PROGRAMMING A BASIC DRUM RHYTHM
 # ___________________________________________________________________________________________________________
 
 def drum_rhythm(a=0, b=0):
-    print("drum_rhythm a = ", a, "   b = ", b)
+    a = var.counter
+    # print("drum_rhythm a = ", a, "   b = ", b)
     # dr_group.stop()
     #  close hi-hat
     ch >> play("-", dur=0.5, sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=[1, 0.4])
@@ -86,12 +53,17 @@ def drum_rhythm(a=0, b=0):
 # ___________________________________________________________________________________________________________
 
 
-def drum_roll(a=0, b=0):
-    print("drum_roll a = ", a, "   b = ", b)
+def drum_roll(b=0):
+    # print("drum_roll b = ", b)
     if b == 8:
+        drum_group.stop()
         dr_08()
     elif b == 16:
-        dr_16()
+        drum_group.stop()
+        dr_random()
+    else:
+        dr_00()
+        # dr_group.stop()     
     return
     
 
@@ -110,6 +82,21 @@ crash_01 = Player()
 hh_close = Player()
 hh_open = Player()
 crash_02 = Player()
+
+
+
+def dr_00():
+    bassdrum >> play("X", dur=0.25, sample=(1), pan=0.4, room=0.7, verb=0.7, sus=3, amp=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+    snare >> play("i", dur=0.25, sample=(1), pan=0.45, room=0.7, verb=0.7, sus=3, amp=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+    rim >>  play("t", dur=0.25, sample=(1), pan=0.45, room=0.7, verb=0.7, sus=3, amp=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+    tom_hi >> play("M", dur=0.25, sample=(4), pan=0.4, room=0.7, verb=0.7, sus=3, amp=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+    tom_mid >> play("M", dur=0.25, sample=(1), pan=0.45, room=0.7, verb=0.7, sus=3, amp=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+    tom_lo >> play("m", dur=0.25, sample=(0), pan=0.45, room=0.7, verb=0.7, sus=3, amp=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+    crash_01 >> play("C", dur=0.25, sample=(0), pan=0.45, room=0.7, verb=0.7, sus=3, amp=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+    hh_close >> play("-", dur=0.25, sample=(0), pan=0.45, room=0.7, verb=0.7, sus=3, amp=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+    hh_open >> play("=", dur=0.25, sample=(1), pan=0.45, room=0.7, verb=0.7, sus=3, amp=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+    crash_02 >> play("#", dur=0.25, sample=(3), pan=0.45, room=0.7, verb=0.7, sus=3, amp=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+    return
 
 def dr_08():
     bassdrum >> play("X", dur=0.25, sample=(1), pan=0.4, room=0.7, verb=0.7, sus=3, amp=[1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0])
@@ -138,6 +125,48 @@ def dr_16():
     return
 
 
+def dr_random():
+    bassdrum >> play("X", dur=0.25, sample=(1), pan=0.4, room=0.7, verb=0.7, sus=3,  amp=PwRand([0,1,0.8,0.6],[14,1,1,1])[:16])
+    snare >> play("i", dur=0.25, sample=(1), pan=0.45, room=0.7, verb=0.7, sus=3,    amp=PwRand([0,1,0.8,0.6],[9,3,1,3])[:16])
+    rim >>  play("t", dur=0.25, sample=(1), pan=0.45, room=0.7, verb=0.7, sus=3,     amp=PwRand([0,1,0.8,0.6],[8,1,1,1])[:16])
+    tom_hi >> play("M", dur=0.25, sample=(4), pan=0.4, room=0.7, verb=0.7, sus=3,    amp=PwRand([0,1,0.8,0.6],[14,1,1,1])[:16])
+    tom_mid >> play("M", dur=0.25, sample=(1), pan=0.45, room=0.7, verb=0.7, sus=3,  amp=PwRand([0,1,0.8,0.6],[14,1,1,1])[:16])
+    tom_lo >> play("m", dur=0.25, sample=(0), pan=0.45, room=0.7, verb=0.7, sus=3,   amp=PwRand([0,1,0.8,0.6],[9,3,1,3])[:16])
+    crash_01 >> play("C", dur=0.25, sample=(0), pan=0.45, room=0.7, verb=0.7, sus=3, amp=[0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0])
+    hh_close >> play("-", dur=0.25, sample=(0), pan=0.45, room=0.7, verb=0.7, sus=3, amp=PwRand([0,1,0.8,0.6],[8,1,1,1])[:16])
+    hh_open >> play("=", dur=0.25, sample=(1), pan=0.45, room=0.7, verb=0.7, sus=3,  amp=PwRand([0,1,0.8,0.6],[12,1,1,0])[:16])
+    crash_02 >> play("#", dur=0.25, sample=(3), pan=0.45, room=0.7, verb=0.7, sus=3, amp=[0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0])
+    return
+    
+
+
+
+def dr_random_01():
+    bassdrum >> play("X", dur=0.25, sample=(1), pan=0.4, room=0.7, verb=0.7, sus=3,  amp=PwRand([0,1,0.8,0.6],[14,1,1,1])[:16])
+    snare >> play("i", dur=0.25, sample=(1), pan=0.45, room=0.7, verb=0.7, sus=3,    amp=PwRand([0,1,0.8,0.6],[9,3,1,3])[:16])
+    rim >>  play("t", dur=0.25, sample=(1), pan=0.45, room=0.7, verb=0.7, sus=3,     amp=PwRand([0,1,0.8,0.6],[8,1,1,1])[:16])
+    tom_hi >> play("M", dur=0.25, sample=(4), pan=0.4, room=0.7, verb=0.7, sus=3,    amp=PwRand([0,1,0.8,0.6],[14,1,1,1])[:16])
+    tom_mid >> play("M", dur=0.25, sample=(1), pan=0.45, room=0.7, verb=0.7, sus=3,  amp=PwRand([0,1,0.8,0.6],[14,1,1,1])[:16])
+    tom_lo >> play("m", dur=0.25, sample=(0), pan=0.45, room=0.7, verb=0.7, sus=3,   amp=PwRand([0,1,0.8,0.6],[9,3,1,3])[:16])
+    crash_01 >> play("C", dur=0.25, sample=(0), pan=0.45, room=0.7, verb=0.7, sus=3, amp=PwRand([0,1,0.8,0.6],[15,1,0,0])[:16])
+    hh_close >> play("-", dur=0.25, sample=(0), pan=0.45, room=0.7, verb=0.7, sus=3, amp=PwRand([0,1,0.8,0.6],[8,1,1,1])[:16])
+    hh_open >> play("=", dur=0.25, sample=(1), pan=0.45, room=0.7, verb=0.7, sus=3,  amp=PwRand([0,1,0.8,0.6],[12,1,1,0])[:16])
+    crash_02 >> play("#", dur=0.25, sample=(3), pan=0.45, room=0.7, verb=0.7, sus=3, amp=PwRand([0,1,0.8,0.6],[15,1,0,0])[:16])
+    return
+    
+def dr_random_02():
+    bassdrum >> play("X", dur=0.25, sample=(1), pan=0.4, room=0.7, verb=0.7, sus=3,  amp=PwRand([0,1,0.8,0.6],[14,1,1,1])[:16])
+    snare >> play("i", dur=0.25, sample=(1), pan=0.45, room=0.7, verb=0.7, sus=3,    amp=PwRand([0,1,0.8,0.6],[9,3,1,3])[:16])
+    rim >>  play("t", dur=0.25, sample=(1), pan=0.45, room=0.7, verb=0.7, sus=3,     amp=PwRand([0,1,0.8,0.6],[8,1,1,1])[:16])
+    tom_hi >> play("M", dur=0.25, sample=(4), pan=0.4, room=0.7, verb=0.7, sus=3,    amp=PwRand([0,1,0.8,0.6],[14,1,2,3])[:16])
+    tom_mid >> play("M", dur=0.25, sample=(1), pan=0.45, room=0.7, verb=0.7, sus=3,  amp=PwRand([0,1,0.8,0.6],[14,1,3,3])[:16])
+    tom_lo >> play("m", dur=0.25, sample=(0), pan=0.45, room=0.7, verb=0.7, sus=3,   amp=PwRand([0,1,0.8,0.6],[9,3,4,2])[:16])
+    crash_01 >> play("C", dur=0.25, sample=(0), pan=0.45, room=0.7, verb=0.7, sus=3, amp=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+    hh_close >> play("-", dur=0.25, sample=(0), pan=0.45, room=0.7, verb=0.7, sus=3, amp=PwRand([0,1,0.8,0.6],[8,8,8,8])[:16])
+    hh_open >> play("=", dur=0.25, sample=(1), pan=0.45, room=0.7, verb=0.7, sus=3,  amp=[0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0])
+    crash_02 >> play("#", dur=0.25, sample=(3), pan=0.45, room=0.7, verb=0.7, sus=3, amp=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+    return
+
 # http://studio.dubroom.org/tutorials-computerdub16.htm
 # ___________________________________________________________________________________________________________
 # PROGRAMMING A BASSLINE ON TWO PIANO CHORDS
@@ -162,7 +191,7 @@ csr()
 
    
 def lead_change(a=0):
-    print(int(var.counter))
+    # print(int(var.counter))
     p1 >> charm(lp1[int(var.counter)], dur=0.5, pan=0.35, room=0.5, verb=0.5, sus=0.15, oct=4, amp=1.5)
     return
 
@@ -197,27 +226,28 @@ def bass_change(a=0):
 
         
 var.counter = var(list(range(0,8)))
-var.track_counter = var(list(range(0,128)))
+var.track_counter = var(list(range(0,24)))
 var.counter1 = var(0)
-var.count_8_beats = var(var.counter)
-var.count_32_beats = var(list(range(0,32)))
-var.count_128_beats = var(var.track_counter)
+
 
 counter_loop_info = Player()
 
 @PlayerMethod
 def counter_info(self):
-    print(var.counter, var.track_counter, var.counter1, var.count_8_beats, var.count_32_beats, var.count_128_beats)
+    print(var.counter, var.track_counter, var.counter1)
 
 @PlayerMethod
 def drum_loop(self, a = 0, b = 0):
-    drum_rhythm(a, var.count_128_beats)
-    var.count_128_beats += 1
+    drum_rhythm(a, b)
+
+@PlayerMethod
+def drum_loop_2(self, b = 0):
+    drum_roll(b)
 
 @PlayerMethod
 def lead_loop(self, a = 0):
     lead_change(a)
-    print("lead_loop: ", a)
+    # print("lead_loop: ", a)
 
 @PlayerMethod
 def bass_loop(self, a = 0):
@@ -225,24 +255,8 @@ def bass_loop(self, a = 0):
     var.counter1 += 1
     # print("bass_loop: ", var.counter1)
     
-# _______________________________________________________________________________________________________
-# start playing
-# _______________________________________________________________________________________________________
-csr()
-nyabinghi_rhythm()
-piano_rhythm()
-p3 >> play("_").every(4, "lead_loop", 0)
-p4 >> play("_").every(4, "bass_loop", var.counter1)
-var.count_8_beats = var.count_128_beats = 0
-p5 >> play("_", amp=0.3).every(4, "drum_loop", var.count_8_beats, var.count_128_beats)
-counter_loop_info >> play("_").every(4, "counter_info")
 
-
-# dr_08()
-# dr_16()
-
-
-nyabinghi = Group(cl,hc,bl,bh,cc,cb,ht,mt,oh,lt,ch,bd)
+nyabinghi_group = Group(cl,hc,bl,bh,cc,cb,ht,mt,oh,lt,ch,bd)
 piano_group = Group(pa, pe)
 lead_group = Group(p3)
 bass_group = Group(p4) 
@@ -250,8 +264,131 @@ drum_group = Group(ch,oh,sd,kd)
 drum_bass_group = Group(ch,oh,sd,kd,p4)
 drum_bass_piano_group = Group(ch,oh,sd,kd,p4,pa,pe)
 
-dr_group = Group(bassdrum, snare, rim, tom_hi, tom_mid, tom_lo, crash_01, hh_close, hh_open, crash_02)
+dr_group = Group(bassdrum, snare, rim, tom_hi, tom_mid, tom_lo, crash_01, hh_close, hh_open, crash_02)    
 
+# _______________________________________________________________________________________________________
+# start playing
+# _______________________________________________________________________________________________________
+csr()
+nyabinghi_rhythm()
+nyabinghi_rhythm_01()
+nyabinghi_rhythm_02()
+piano_rhythm()
+p3 >> play("_").every(4, "lead_loop", 0)
+p4 >> play("_").every(4, "bass_loop", var.counter1)
+p5 >> play("_", amp=0.3).every(4, "drum_loop", var.counter, var.track_counter)
+p6 >> play("_", amp=0.3).every(4, "drum_loop_2", var.track_counter)
+# counter_loop_info >> play("_").every(4, "counter_info")
+
+# dr_00()
+# dr_08()
+# dr_16()
+
+nyabinghi_group.dur=2
+
+dr_random()
+dr_group.dur=2
+
+dr_random_01()
+dr_group.dur=2
+
+dr_random_02()
+dr_group.dur=2
+
+nyabinghi_group.dur=1
+
+dr_random()
+dr_group.dur=1
+
+dr_random_01()
+dr_group.dur=1
+
+dr_random_02()
+dr_group.dur=1
+
+nyabinghi_group.dur=0.5
+
+dr_random()
+dr_group.dur=0.5
+
+dr_random_01()
+dr_group.dur=0.5
+
+dr_random_02()
+dr_group.dur=0.5
+
+nyabinghi_group.dur=0.25
+
+r_random()
+dr_group.dur=0.25
+
+dr_random_01()
+dr_group.dur=0.25
+
+dr_random_02()
+dr_group.dur=0.25
+
+#  low conga
+cl >> play(PEuclid2(7, 16, "0", "c"), dur=1, sample=(0), pan=-0.5,room=0.3, verb=0.3, sus=0.5)
+
+#  open hi conga
+hc >> play(PEuclid2(5,8,'0','c'), dur=1, sample=(4), pan=-0.55,room=0.5, verb=0.3, sus=0.5)
+
+# bongo low
+bl >> play(PEuclid2(9,16,"0","b"), dur=1, sample=(1), pan=-0.25,room=0.3, verb=0.2, sus=0.5)
+
+# bl >> play("bbb0", dur=1, sample=(1), pan=-0.25,room=0.3, verb=0.2, sus=0.5)
+
+# bongo hi
+# bh >> play(PEuclid2(17,32,"0","b"), dur=[1, 1, 6], sample=(0), pan=-0.3,room=0.5, verb=0.2, sus=0.5)
+bh >> play("[bbb0][bb00]0", dur=[1, 1, 6], sample=(0), pan=-0.3,room=0.5, verb=0.2, sus=0.5)
+
+# crash cymba
+cc >> play(PEuclid2(1,16,'0','C'), dur=1, sample=(0), amp=0.2, pan=0.5,room=0.0, verb=0.0, sus=0.2)
+
+# cowbell
+cb >> play(PEuclid2(13,32,"0","T"), dur=[1, 1, 6], sample=(1), amp=0.1, pan=0.3,room=0.3, verb=0.2, sus=0.5)
+
+# hi-mid-tom
+ht >> play(PEuclid2(7,24,"0","M"), dur=[2, 0.6, 1.4], sample=(4), pan=0.2, room=0.5, verb=0.5, sus=2)
+
+# low-mid-tom
+mt >> play("MM0M", dur=[3, 5], sample=(1), pan=0.2, room=0.5, verb=0.5, sus=2)
+
+# open hi-hat
+oh >> play("-0=", dur=[0.1, 3.9, 4], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=2)
+
+# low tom
+lt >> play("mm00", dur=[0.1, 3.5, 0.4, 4], sample=(0), pan=0.2, room=0.5, verb=0.5, sus=2)
+
+# close hi-hat
+ch >> play("-0-0", dur=1, sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5)
+
+#  bass drum
+bd >> play("XX00", dur=1, sample=(0), pan=0.4, room=0.7, verb=0.7, sus=3)
+# _______________________________________________________________________________________________________
+# Stop playing
+# _______________________________________________________________________________________________________
+
+nyabinghi_group.stop()
+drum_group.stop()
+piano_group.stop()
+p1.stop()
+p2.stop()
+p3.stop()
+p4.stop()
+p5.stop()
+dr_group.stop()
+
+
+# _______________________________________________________________________________________________________
+# Concel functions
+# _______________________________________________________________________________________________________
+p3.never("lead")
+
+p4.never("bass")
+
+p5.never("drum")
 
 
 # _______________________________________________________________________________________________________
@@ -305,27 +442,6 @@ piano_group.
 piano_group.
 
 
-# _______________________________________________________________________________________________________
-# Concel functions
-# _______________________________________________________________________________________________________
-p3.never("lead")
 
-p4.never("bass")
-
-p5.never("drum")
-
-# _______________________________________________________________________________________________________
-# Stop playing
-# _______________________________________________________________________________________________________
-
-nyabinghi_group.stop()
-drum_group.stop()
-piano_group.stop()
-p1.stop()
-p2.stop()
-p3.stop()
-p4.stop()
-p5.stop()
-dr_group.stop()
 
 print(Clock)
