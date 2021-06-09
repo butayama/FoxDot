@@ -1,4 +1,3 @@
-
 # https://foxdot.org/docs/player-attributes/
 
 
@@ -9,8 +8,9 @@
 # https://stackoverflow.com/questions/714881/how-to-include-external-python-code-to-use-in-other-files
 with open('/home/uwe/PycharmProjects/FoxDot/own_files/include_test.py') as f: exec(f.read())
 
-# include_message("Include function text from include_test loaded")
-# print(message)
+include_message("Include function text from include_test loaded")
+
+print(message)
 
 def csr(bpm=140, scale="chromatic",root="C"):
     Clock.bpm = bpm
@@ -64,21 +64,21 @@ def nyabinghi_rhythm():
 
 def drum_rhythm(a=0, b=0):
     print("drum_rhythm a = ", a, "   b = ", b)
-    # dr_group.stop()
-    #  close hi-hat
-    ch >> play("-", dur=0.5, sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=[1, 0.4])
-
-    # open hi-hat
-    oh >> play("=", dur=[0.5], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=PStep(8, 1))
-
-    # snare drum
-    if a != 7:
-        sd >> play("0i", dur=[2.0, 2.0], sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=1)
-    else:
-        sd >> play("0ii", dur=[0.5,1.5,2.0], sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=1)
-
-    # kick drum
-    kd >> play("XXxXXx", dur=[2.0, 1.5, 0.5, 2.0, 1, 1], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=[1])
+        # dr_group.stop()
+        #  close hi-hat
+        ch >> play("-", dur=0.5, sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=[1, 0.4])
+    
+        # open hi-hat
+        oh >> play("=", dur=[0.5], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=PStep(8, 1))
+    
+        # snare drum
+        if a != 7:
+            sd >> play("0i", dur=[2.0, 2.0], sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=1)
+        else:
+            sd >> play("0ii", dur=[0.5,1.5,2.0], sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=1)    
+    
+        # kick drum
+        kd >> play("XXxXXx", dur=[2.0, 1.5, 0.5, 2.0, 1, 1], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=[1])
     return
 
 # ___________________________________________________________________________________________________________
@@ -89,9 +89,29 @@ def drum_rhythm(a=0, b=0):
 def drum_roll(a=0, b=0):
     print("drum_roll a = ", a, "   b = ", b)
     if b == 8:
+        drum_group.stop()
         dr_08()
+        
     elif b == 16:
-        dr_16()
+        drum_group.stop()
+        dr_16()      
+
+    elif b > 8:
+        dr_group.stop()
+        #  close hi-hat
+        ch >> play("-", dur=0.5, sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=[1, 0.4])
+    
+        # open hi-hat
+        oh >> play("=", dur=[0.5], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=PStep(8, 1))
+    
+        # snare drum
+        if a != 7:
+            sd >> play("0i", dur=[2.0, 2.0], sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=1)
+        else:
+            sd >> play("0ii", dur=[0.5,1.5,2.0], sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=1)    
+    
+        # kick drum
+        kd >> play("XXxXXx", dur=[2.0, 1.5, 0.5, 2.0, 1, 1], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=[1])
     return
     
 
