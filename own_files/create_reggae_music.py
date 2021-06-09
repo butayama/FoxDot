@@ -11,7 +11,7 @@ def csr(bpm=140, scale="chromatic",root="C"):
     Root.default = root
     return
 
-def nyabinghi():
+def nyabinghi_rhythm():
     #  low conga
     cl >> play("cc00", dur=1, sample=(0), pan=-0.5,room=0.3, verb=0.3, sus=0.5)
 
@@ -47,9 +47,7 @@ def nyabinghi():
 
     #  bass drum
     bd >> play("X000", dur=1, sample=(0), pan=0.4, room=0.7, verb=0.7, sus=3)
-
-    nyabinghi = Group(cl,hc,bl,bh,cc,cb,ht,mt,oh,lt,ch,bd)
-    return nyabinghi
+    return
 
 # http://studio.dubroom.org/tutorials-computerdub15.htm
 
@@ -57,23 +55,57 @@ def nyabinghi():
 # PROGRAMMING A BASIC DRUM RHYTHM
 # ___________________________________________________________________________________________________________
 
-def drum_rhythm(a=0):
-    #  close hi-hat
-    ch >> play("-", dur=0.5, sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=[1, 0.4])
+def drum_rhythm(a=0, b=0):
+    print("drum_rhythm a = ", a, "   b = ", b)
+        # dr_group.stop()
+        #  close hi-hat
+        ch >> play("-", dur=0.5, sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=[1, 0.4])
+    
+        # open hi-hat
+        oh >> play("=", dur=[0.5], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=PStep(8, 1))
+    
+        # snare drum
+        if a != 7:
+            sd >> play("0i", dur=[2.0, 2.0], sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=1)
+        else:
+            sd >> play("0ii", dur=[0.5,1.5,2.0], sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=1)    
+    
+        # kick drum
+        kd >> play("XXxXXx", dur=[2.0, 1.5, 0.5, 2.0, 1, 1], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=[1])
+    return
 
-    # open hi-hat
-    oh >> play("=", dur=[0.5], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=PStep(8, 1))
+# ___________________________________________________________________________________________________________
+# PROGRAMMING A DRUM Roll
+# ___________________________________________________________________________________________________________
 
-    # snare drum
-    if a != 7:
-        sd >> play("0i", dur=[2.0, 2.0], sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=1)
-    else:
-        sd >> play("0ii", dur=[0.5,1.5,2.0], sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=1)    
 
-    # kick drum
-    kd >> play("XXxXXx", dur=[2.0, 1.5, 0.5, 2.0, 1, 1], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=[1])
-    drum_rhythm = Group(ch,oh,sd,kd)
-    return drum_rhythm
+def drum_roll(a=0, b=0):
+    print("drum_roll a = ", a, "   b = ", b)
+    if b == 8:
+        drum_group.stop()
+        dr_08()
+        
+    elif b == 16:
+        drum_group.stop()
+        dr_16()      
+
+    elif b > 8:
+        dr_group.stop()
+        #  close hi-hat
+        ch >> play("-", dur=0.5, sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=[1, 0.4])
+    
+        # open hi-hat
+        oh >> play("=", dur=[0.5], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=PStep(8, 1))
+    
+        # snare drum
+        if a != 7:
+            sd >> play("0i", dur=[2.0, 2.0], sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=1)
+        else:
+            sd >> play("0ii", dur=[0.5,1.5,2.0], sample=(0), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=1)    
+    
+        # kick drum
+        kd >> play("XXxXXx", dur=[2.0, 1.5, 0.5, 2.0, 1, 1], sample=(1), pan=0.45, room=0.5, verb=0.5, sus=0.5, amp=[1])
+    return
     
 
 # ___________________________________________________________________________________________________________
@@ -91,7 +123,7 @@ crash_01 = Player()
 hh_close = Player()
 hh_open = Player()
 crash_02 = Player()
-    
+
 def dr_08():
     bassdrum >> play("X", dur=0.25, sample=(1), pan=0.4, room=0.7, verb=0.7, sus=3, amp=[1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0])
     snare >> play("i", dur=0.25, sample=(1), pan=0.45, room=0.7, verb=0.7, sus=3, amp=[0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0])
@@ -116,17 +148,7 @@ def dr_16():
     hh_close >> play("-", dur=0.25, sample=(0), pan=0.45, room=0.7, verb=0.7, sus=3, amp=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
     hh_open >> play("=", dur=0.25, sample=(1), pan=0.45, room=0.7, verb=0.7, sus=3, amp=[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
     crash_02 >> play("#", dur=0.25, sample=(3), pan=0.45, room=0.7, verb=0.7, sus=3, amp=[0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0])
-
-dr_16()
-
-
-
-
-
-
-
-
-
+    return
 
 
 # http://studio.dubroom.org/tutorials-computerdub16.htm
@@ -139,8 +161,7 @@ def piano_rhythm():
     pa >> prophet([_,(9,12,16),_,(9,12,16),_,_], dur=[rest(1),0.25,rest(1.75),0.25,rest(0.75),rest(4)], oct=5, pan=-0.2, room=0.5, verb=0.5, sus=0.15, amp=[0.8])
     # melodic E Chord (piano synth is not recognized)
     pe >> prophet([_,(4,7,11),_,(4,7,11),_], dur=[rest(5),0.25,rest(1.75),0.25,rest(0.75)], oct=5, pan=-0.2, room=0.5, verb=0.5, sus=0.15, amp=[0.8])
-    piano_rhythm = Group(pa, pe)
-    return piano_rhythm
+    return
     
 lead_pattern_C_1 = P[(0,4,9), _, (0,4,9), _, _, _, (0,4,9), _]
 lead_pattern_B_2 = P[_, _, (-1,4,7), _, _, _, (-1,4,7), _]
@@ -185,27 +206,35 @@ def bass_change(a=0):
         a = int(number)
         # print(a)
         p2 >> bass(bass_pitch_pattern[int(number)], dur=bass_dur_pattern[int(number)], oct=4, amp=0.9, pan=-0.6, room=0.1, verb=0.9, sus=0.9)
-    bass_player = Group(p2)    
-    return bass_player    
+    return
 
         
 var.counter = var(list(range(0,8)))
+var.track_counter = var(list(range(0,128)))
 var.counter1 = var(0)
-count_8_beats = var(var.counter)
-count_32_beats = var(list(range(0,32)))
+var.count_8_beats = var(var.counter)
+var.count_32_beats = var(list(range(0,32)))
+var.count_128_beats = var(var.track_counter)
+
+counter_loop_info = Player()
 
 @PlayerMethod
-def drum_loop(self, a = 0):
-    drum_group = drum_rhythm(a)
+def counter_info(self):
+    print(var.counter, var.track_counter, var.counter1, var.count_8_beats, var.count_32_beats, var.count_128_beats)
+
+@PlayerMethod
+def drum_loop(self, a = 0, b = 0):
+    drum_rhythm(a, var.count_128_beats)
+    var.count_128_beats += 1
 
 @PlayerMethod
 def lead_loop(self, a = 0):
-    lead_group = lead_change(a)
+    lead_change(a)
     print("lead_loop: ", a)
 
 @PlayerMethod
 def bass_loop(self, a = 0):
-    bass_group = bass_change(a)
+    bass_change(a)
     var.counter1 += 1
     # print("bass_loop: ", var.counter1)
     
@@ -213,17 +242,30 @@ def bass_loop(self, a = 0):
 # start playing
 # _______________________________________________________________________________________________________
 csr()
-nyabinghi_group = nyabinghi()
-piano_group = piano_rhythm()
+nyabinghi_rhythm()
+piano_rhythm()
 p3 >> play("_").every(4, "lead_loop", 0)
 p4 >> play("_").every(4, "bass_loop", var.counter1)
-p5 >> play("_", amp=0.3).every(4, "drum_loop", count_8_beats)
+var.count_8_beats = var.count_128_beats = 0
+p5 >> play("_", amp=0.3).every(4, "drum_loop", var.count_8_beats, var.count_128_beats)
+counter_loop_info >> play("_").every(4, "counter_info")
 
+
+# dr_08()
+# dr_16()
+
+
+nyabinghi = Group(cl,hc,bl,bh,cc,cb,ht,mt,oh,lt,ch,bd)
+piano_group = Group(pa, pe)
 lead_group = Group(p3)
-bass_group = Group(p4)
-drum_group = Group(p5)
-drum_bass_group = Group(p4, p5)
-drum_bass_piano_group = Group(p4, p5, pa, pe)
+bass_group = Group(p4) 
+drum_group = Group(ch,oh,sd,kd)
+drum_bass_group = Group(ch,oh,sd,kd,p4)
+drum_bass_piano_group = Group(ch,oh,sd,kd,p4,pa,pe)
+
+dr_group = Group(bassdrum, snare, rim, tom_hi, tom_mid, tom_lo, crash_01, hh_close, hh_open, crash_02)
+
+
 
 # _______________________________________________________________________________________________________
 # only playing
@@ -268,7 +310,7 @@ piano_group.pshift=[linvar([0, 5], 0.25)]
 piano_group.pshift=[0]
 piano_group.glide=[linvar([0, 5], 0.25)]
 piano_group.glide=[0]
-piano_group.every(8, "stutter", 4)
+piano_group.every(4, "stutter", 4)
 piano_group.every(8, "stutter", 0)
 piano_group.
 piano_group.
@@ -297,5 +339,6 @@ p2.stop()
 p3.stop()
 p4.stop()
 p5.stop()
+dr_group.stop()
 
 print(Clock)
