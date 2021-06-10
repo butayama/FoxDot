@@ -138,22 +138,40 @@ def dr_random():
     crash_02 >> play("#", dur=0.25, sample=(3), pan=0.45, room=0.7, verb=0.7, sus=3, amp=[0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0])
     return
     
+def dr_random_01_gen():
+    amp_list = []
+    amp_list.append(PwRand([0,1,0.8,0.6],[14,1,1,1])[:16])
+    amp_list.append(PwRand([0,1,0.8,0.6],[9,3,1,3])[:16])
+    amp_list.append(PwRand([0,1,0.8,0.6],[8,1,1,1])[:16])
+    amp_list.append(PwRand([0,1,0.8,0.6],[14,1,1,1])[:16])
+    amp_list.append(PwRand([0,1,0.8,0.6],[14,1,1,1])[:16])
+    amp_list.append(PwRand([0,1,0.8,0.6],[9,3,1,3])[:16])
+    amp_list.append(PwRand([0,1,0.8,0.6],[15,1,0,0])[:16])
+    amp_list.append(PwRand([0,1,0.8,0.6],[8,1,1,1])[:16])
+    amp_list.append(PwRand([0,1,0.8,0.6],[12,1,1,0])[:16])
+    amp_list.append(PwRand([0,1,0.8,0.6],[15,1,0,0])[:16])
+    return amp_list
 
-
+amp_list_number = 0
 
 def dr_random_01():
-    bassdrum >> play("X", dur=0.25, sample=(1), pan=0.4, room=0.7, verb=0.7, sus=3,  amp=PwRand([0,1,0.8,0.6],[14,1,1,1])[:16])
-    snare >> play("i", dur=0.25, sample=(1), pan=0.45, room=0.7, verb=0.7, sus=3,    amp=PwRand([0,1,0.8,0.6],[9,3,1,3])[:16])
-    rim >>  play("t", dur=0.25, sample=(1), pan=0.45, room=0.7, verb=0.7, sus=3,     amp=PwRand([0,1,0.8,0.6],[8,1,1,1])[:16])
-    tom_hi >> play("M", dur=0.25, sample=(4), pan=0.4, room=0.7, verb=0.7, sus=3,    amp=PwRand([0,1,0.8,0.6],[14,1,1,1])[:16])
-    tom_mid >> play("M", dur=0.25, sample=(1), pan=0.45, room=0.7, verb=0.7, sus=3,  amp=PwRand([0,1,0.8,0.6],[14,1,1,1])[:16])
-    tom_lo >> play("m", dur=0.25, sample=(0), pan=0.45, room=0.7, verb=0.7, sus=3,   amp=PwRand([0,1,0.8,0.6],[9,3,1,3])[:16])
-    crash_01 >> play("C", dur=0.25, sample=(0), pan=0.45, room=0.7, verb=0.7, sus=3, amp=PwRand([0,1,0.8,0.6],[15,1,0,0])[:16])
-    hh_close >> play("-", dur=0.25, sample=(0), pan=0.45, room=0.7, verb=0.7, sus=3, amp=PwRand([0,1,0.8,0.6],[8,1,1,1])[:16])
-    hh_open >> play("=", dur=0.25, sample=(1), pan=0.45, room=0.7, verb=0.7, sus=3,  amp=PwRand([0,1,0.8,0.6],[12,1,1,0])[:16])
-    crash_02 >> play("#", dur=0.25, sample=(3), pan=0.45, room=0.7, verb=0.7, sus=3, amp=PwRand([0,1,0.8,0.6],[15,1,0,0])[:16])
+    amp_list = dr_random_01_gen()
+    print(f"amp_list {amp_list_number} = {amp_list}")
+    bassdrum >> play("X", dur=0.25, sample=(1), pan=0.4, room=0.7, verb=0.7, sus=3,  amp=amp_list[0])
+    snare >> play("i", dur=0.25, sample=(1), pan=0.45, room=0.7, verb=0.7, sus=3,    amp=amp_list[1])
+    rim >>  play("t", dur=0.25, sample=(1), pan=0.45, room=0.7, verb=0.7, sus=3,     amp=amp_list[2])
+    tom_hi >> play("M", dur=0.25, sample=(4), pan=0.4, room=0.7, verb=0.7, sus=3,    amp=amp_list[3])
+    tom_mid >> play("M", dur=0.25, sample=(1), pan=0.45, room=0.7, verb=0.7, sus=3,  amp=amp_list[4])
+    tom_lo >> play("m", dur=0.25, sample=(0), pan=0.45, room=0.7, verb=0.7, sus=3,   amp=amp_list[5])
+    crash_01 >> play("C", dur=0.25, sample=(0), pan=0.45, room=0.7, verb=0.7, sus=3, amp=amp_list[6])
+    hh_close >> play("-", dur=0.25, sample=(0), pan=0.45, room=0.7, verb=0.7, sus=3, amp=amp_list[7])
+    hh_open >> play("=", dur=0.25, sample=(1), pan=0.45, room=0.7, verb=0.7, sus=3,  amp=amp_list[8])
+    crash_02 >> play("#", dur=0.25, sample=(3), pan=0.45, room=0.7, verb=0.7, sus=3, amp=amp_list[9])
     return
     
+csr()
+dr_random_01()
+
 def dr_random_02():
     bassdrum >> play("X", dur=0.25, sample=(1), pan=0.4, room=0.7, verb=0.7, sus=3,  amp=PwRand([0,1,0.8,0.6],[14,1,1,1])[:16])
     snare >> play("i", dur=0.25, sample=(1), pan=0.45, room=0.7, verb=0.7, sus=3,    amp=PwRand([0,1,0.8,0.6],[9,3,1,3])[:16])
