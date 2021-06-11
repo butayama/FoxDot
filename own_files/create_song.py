@@ -7,15 +7,19 @@
 # include files:
 # https://stackoverflow.com/questions/714881/how-to-include-external-python-code-to-use-in-other-files
 
-# Windows:
-# with open(r'E:\GitHub\FoxDot\own_files\nyabinghi.py') as f: exec(f.read())
-# with open(r'E:\GitHub\FoxDot\own_files\amp_list_dr_random_01.py') as f: exec(f.read())
-# with open(r'E:\GitHub\FoxDot\own_files\amp_list_dr_random_02.py') as f: exec(f.read())
-
+import platform
+h = platform.uname()[1]
+print(h)
+# Windows DESKTOP-0AVFOFJ
+if h == "DESKTOP-0AVFOFJ": 
+    with open(r'E:\GitHub\FoxDot\own_files\nyabinghi.py') as f: exec(f.read())
+    with open(r'E:\GitHub\FoxDot\own_files\amp_list_dr_random_01.py') as f: exec(f.read())
+    with open(r'E:\GitHub\FoxDot\own_files\amp_list_dr_random_02.py') as f: exec(f.read())
 # Debian - akoya:
-with open(r'/home/uwe/PycharmProjects/FoxDot/own_files/nyabinghi.py') as f: exec(f.read())
-with open(r'/home/uwe/PycharmProjects/FoxDot/own_files/amp_list_dr_random_01.py') as f: exec(f.read())
-with open(r'/home/uwe/PycharmProjects/FoxDot/own_files/amp_list_dr_random_02.py') as f: exec(f.read())
+elif h == "akoya":    
+    with open(r'/home/uwe/PycharmProjects/FoxDot/own_files/nyabinghi.py') as f: exec(f.read())
+    with open(r'/home/uwe/PycharmProjects/FoxDot/own_files/amp_list_dr_random_01.py') as f: exec(f.read())
+    with open(r'/home/uwe/PycharmProjects/FoxDot/own_files/amp_list_dr_random_02.py') as f: exec(f.read())
 
 
 # include_message("Include function text from include_test loaded")
@@ -353,11 +357,33 @@ song_measure = 0
 song_measure = song_measure_info(song_measure)
 
 # Start at bar 0 with silence
-
+testvar = 0
 # Begin with a one bar drum intro at bar 8
 @nextBar
+def start_time():
+    print(testvar)
+    print(Clock.now())
+    print(Clock.bars())
+    print(Clock.beat_dur())
+    print(Clock.beats_to_seconds(1))
+    print(Clock.seconds_to_beats(1))
+    print(Clock.get_time_at_beat(0))
+    print(())
+    print(())
 
+for i in range(0,10)    :
+    print(Clock.get_time_at_beat(i))
+    print(Clock.now())
 
+a = var([0,4,5,3], 4)
+# b1 >> bass(a, dur=PDur(3,8)) + var([0,1],[3,1])   
+b = a + var([0,10],8) 
+print(int(Clock.now()), (a, b))
+
+# Updating the values of one 'var' will update it everywhere else
+a.update([1,4], 8)
+
+print(int(Clock.now()), (a, b))
 # Start drum loop at bar 9
 
 # Start piano at bar 11
