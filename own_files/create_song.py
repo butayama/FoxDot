@@ -305,10 +305,6 @@ def counter_info(self):
     print(var.counter, var.track_counter, var.counter1)
     
 @PlayerMethod
-def song_measure_info(self):
-    print(song_measure_count)
-
-@PlayerMethod
 def drum_loop(self, a = 0, b = 0):
     drum_rhythm(a, b)
 
@@ -343,9 +339,33 @@ dr_random_02(amp_list02[1])
 # _______________________________________________________________________________________________________
 csr()
 number_of_song_measures = 128
+
+def song_measure_info(song_measure):
+    song_measure += 1
+    print(f"{Clock.now()}   {song_measure_count}   {song_measure}")
+    return song_measure
+
 song_measure_count = var(list(range(0, number_of_song_measures)))
 # var.song_measure_count = 0
-s1 >> play().every(4, "song_measure_info")
+# Clock.set_time(0)
+song_measure = 0
+# s1 >> play().every(4, "song_measure_info", song_measure)
+song_measure = song_measure_info(song_measure)
+
+# Start at bar 0 with silence
+
+# Begin with a one bar drum intro at bar 8
+@nextBar
+
+
+# Start drum loop at bar 9
+
+# Start piano at bar 11
+
+# Start Nyabinghi at bar 12
+ 
+
+
 
 
 
