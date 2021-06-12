@@ -343,6 +343,7 @@ dr_random_02(amp_list02[1])
 # _______________________________________________________________________________________________________
 csr()
 number_of_song_measures = 128
+def song_init(init_time)
 
 def song_measure_info(song_measure):
     song_measure += 1
@@ -370,10 +371,30 @@ def start_time():
     print(Clock.get_time_at_beat(0))
     print(())
     print(())
+    
+def pluck_a_note(note_x="x"):
+    p1 >> play(note_x,dur=4)
+    
+pluck_a_note("b")
+pluck_a_note("c")
+pluck_a_note("d")
+pluck_a_note("e")
+pluck_a_note("f")
+pluck_a_note("g")
+pluck_a_note("h")
 
-for i in range(0,10)    :
-    print(Clock.get_time_at_beat(i))
-    print(Clock.now())
+notes_to_play = ("xabcdefghij")
+
+
+for i in range(0,10):
+    t = Clock.get_time_at_beat(i)
+    print(t)
+    y = Clock.now()
+    z = i * y
+    w = t + z
+    print(Clock.now(), z , w)
+    print(nextbar, notes_to_play[i])
+    # Clock.schedule(pluck_a_note(notes_to_play, beat=i, notes_to_play))
 
 a = var([0,4,5,3], 4)
 # b1 >> bass(a, dur=PDur(3,8)) + var([0,1],[3,1])   
