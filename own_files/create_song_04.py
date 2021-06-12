@@ -46,24 +46,35 @@ def song_init(init_time=Clock.now()):
     for i in range(0,10):
         x_time = init_time+i*4
         print(i, x_time)
-        Clock.schedule(pluck_a_note, Clock.now()+4, notes_to_play[i])
+        Clock.schedule(pluck_a_note, [Clock.now()+4], notes_to_play[i])
 
 song_init(Clock.now())
 
-Clock.set_time(10)
+Clock.set_time(6)
 Clock.schedule(pluck_a_note, Clock.now()+4, notes_to_play[0])
 print(Clock.now()+4)
 
-def update(n=0):
-    if 0 > n > 4:
-        d1 >> play("x ")
-    elif 4 > n > 20:
-        d1 >> play("x-")
+def update(n=[0], symb="x"):
+    print(n)
+    if n[0] < 10:
+        pluck_a_note(symb)
     else:
-        d1.stop()
+        p1.stop()
         return
-    Clock.future(1, update, args=(n + 1,))
+    # Clock.future(4, update, [n + 1], notes_to_play[i])  
+    n[0] += 1
+    print(n)  
+    Clock.future(1, update, n[0])
 
 update()  
 
-d1 >> play("x ")  
+Clock.future(1, update, [1])
+
+def update1(n=0):
+    print(n)
+    d1 >> play("x ")
+
+
+Clock.future(1, update1, [3])
+
+update1()
