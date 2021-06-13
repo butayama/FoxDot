@@ -7,11 +7,20 @@
 # include files:
 # https://stackoverflow.com/questions/714881/how-to-include-external-python-code-to-use-in-other-files
 
-# Windows:
-with open(r'E:\GitHub\FoxDot\own_files\nyabinghi.py') as f: exec(f.read())
+import platform
+h = platform.uname()[1]
+print(h)
+# Windows DESKTOP-0AVFOFJ
+if h == "DESKTOP-0AVFOFJ": 
+    with open(r'E:\GitHub\FoxDot\own_files\nyabinghi.py') as f: exec(f.read())
+    with open(r'E:\GitHub\FoxDot\own_files\amp_list_dr_random_01.py') as f: exec(f.read())
+    with open(r'E:\GitHub\FoxDot\own_files\amp_list_dr_random_02.py') as f: exec(f.read())
+# Debian - akoya:
+elif h == "akoya":    
+    with open(r'/home/uwe/PycharmProjects/FoxDot/own_files/nyabinghi.py') as f: exec(f.read())
+    with open(r'/home/uwe/PycharmProjects/FoxDot/own_files/amp_list_dr_random_01.py') as f: exec(f.read())
+    with open(r'/home/uwe/PycharmProjects/FoxDot/own_files/amp_list_dr_random_02.py') as f: exec(f.read())
 
-# Debian:
-# with open('/home/uwe/PycharmProjects/FoxDot/own_files/include_test.py') as f: exec(f.read())    
 
 # include_message("Include function text from include_test loaded")
 # print(message)
@@ -82,7 +91,15 @@ crash_01 = Player()
 hh_close = Player()
 hh_open = Player()
 crash_02 = Player()
+dr_group = Group(bassdrum, snare, rim, tom_hi, tom_mid, tom_lo, crash_01, hh_close, hh_open, crash_02)
 
+nyabinghi_group = Group(cl,hc,bl,bh,cc,cb,ht,mt,oh,lt,ch,bd)
+piano_group = Group(pa, pe)
+lead_group = Group(p3)
+bass_group = Group(p4)
+drum_group = Group(ch,oh,sd,kd)
+drum_bass_group = Group(ch,oh,sd,kd,p4)
+drum_bass_piano_group = Group(ch,oh,sd,kd,p4,pa,pe)
 
 
 def dr_00():
@@ -151,11 +168,12 @@ def dr_random_01_gen():
     amp_list.append(PwRand([0,1,0.8,0.6],[12,1,1,0])[:16])
     amp_list.append(PwRand([0,1,0.8,0.6],[15,1,0,0])[:16])
     return amp_list
-
+    
 var.amp_list_01_number = var(0)
 
-def dr_random_01():
-    amp_list = dr_random_01_gen()
+def dr_random_01(amp_list=[]):
+    if not amp_list:
+        amp_list = dr_random_01_gen()
     var.amp_list_01_number += 1
     print(f"amp_list01_{var.amp_list_01_number} = {amp_list}")
     bassdrum >> play("X", dur=0.25, sample=(1), pan=0.4, room=0.7, verb=0.7, sus=3,  amp=amp_list[0])
@@ -169,6 +187,10 @@ def dr_random_01():
     hh_open >> play("=", dur=0.25, sample=(1), pan=0.45, room=0.7, verb=0.7, sus=3,  amp=amp_list[8])
     crash_02 >> play("#", dur=0.25, sample=(3), pan=0.45, room=0.7, verb=0.7, sus=3, amp=amp_list[9])
     return
+
+
+# print(Clock.now())
+# Clock.schedule(lambda: print(Clock.now()), Clock.now() + 4)
 
 def dr_random_02_gen():
     amp_list = []
@@ -186,8 +208,9 @@ def dr_random_02_gen():
 
 var.amp_list_02_number = var(0)
 
-def dr_random_02():
-    amp_list = dr_random_02_gen()
+def dr_random_02(amp_list=[]):
+    if not amp_list:
+        amp_list = dr_random_02_gen()
     var.amp_list_02_number += 1
     print(f"amp_list02_{var.amp_list_02_number} = {amp_list}")
     bassdrum >> play("X", dur=0.25, sample=(1), pan=0.4, room=0.7, verb=0.7, sus=3,  amp=amp_list[0])
@@ -202,12 +225,18 @@ def dr_random_02():
     crash_02 >> play("#", dur=0.25, sample=(3), pan=0.45, room=0.7, verb=0.7, sus=3, amp=amp_list[9])
     return
 
+amp_list01_11 = [P[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], P[0.6, 0, 1, 0, 0, 1, 0, 0.8, 0.6, 0, 0, 1, 0, 0, 0, 0], P[0, 0, 1, 0, 0, 0, 0.6, 0.8, 0, 0, 0, 0, 0, 0, 0, 0], P[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1], P[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0], P[1, 1, 0, 0.8, 0, 0, 0.6, 1, 0, 0, 0.6, 0, 0, 0, 0, 0], P[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], P[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0.8, 0, 0], P[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], P[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0]]
+
+print(amp_list01_11[5])
 
 csr()
 dr_random_01()
 dr_random_02()
-dr_group.stop()
-
+# dr_group.stop()
+    
+# def dr_list_play(dr_collection_01=amp_list01, dr_collection_02=amp_list02):
+#     print(a)           
+# dr_list_play()  
 
 # http://studio.dubroom.org/tutorials-computerdub16.htm
 # ___________________________________________________________________________________________________________
@@ -266,7 +295,8 @@ def bass_change(a=0):
         p2 >> bass(bass_pitch_pattern[int(number)], dur=bass_dur_pattern[int(number)], oct=4, amp=0.9, pan=-0.6, room=0.1, verb=0.9, sus=0.9)
     return
 
-        
+list_01_counter = var(list(range(0, len(amp_list01)))) 
+list_02_counter = var(list(range(0, len(amp_list02))))          
 var.counter = var(list(range(0,8)))
 var.track_counter = var(list(range(0,24)))
 var.counter1 = var(0)
@@ -277,7 +307,7 @@ counter_loop_info = Player()
 @PlayerMethod
 def counter_info(self):
     print(var.counter, var.track_counter, var.counter1)
-
+    
 @PlayerMethod
 def drum_loop(self, a = 0, b = 0):
     drum_rhythm(a, b)
@@ -296,17 +326,79 @@ def bass_loop(self, a = 0):
     bass_change(a)
     var.counter1 += 1
     # print("bass_loop: ", var.counter1)
-    
 
-nyabinghi_group = Group(cl,hc,bl,bh,cc,cb,ht,mt,oh,lt,ch,bd)
-piano_group = Group(pa, pe)
-lead_group = Group(p3)
-bass_group = Group(p4) 
-drum_group = Group(ch,oh,sd,kd)
-drum_bass_group = Group(ch,oh,sd,kd,p4)
-drum_bass_piano_group = Group(ch,oh,sd,kd,p4,pa,pe)
+@PlayerMethod
+def amp_list_loop(self, amp_list = amp_list01, list_nr = 1):
+    if list_nr == 1:
+        dr_random_01(amp_list[int(list_01_counter)])
+    elif list_nr == 2:
+        dr_random_02(amp_list[int(list_02_counter)])        
 
-dr_group = Group(bassdrum, snare, rim, tom_hi, tom_mid, tom_lo, crash_01, hh_close, hh_open, crash_02)    
+amp_list02_var = Pvar(amp_list02, 4) 
+# print(amp_list02_var)
+dr_random_02(amp_list02[1])    
+
+# _______________________________________________________________________________________________________
+# start playing according to a planned schedule
+# _______________________________________________________________________________________________________
+csr()
+number_of_song_measures = 128
+
+notes_to_play = ("xabcdefghij")
+
+
+def pluck_a_note(note_x="x"):
+    p1 >> play(note_x, dur=4)
+
+
+def song_init(i_bar):
+    def increase_bar(j_bar, j_increment):
+        j_bar += j_increment
+        j_beat = j_bar + j_increment * Clock.bars()
+        return j_bar, j_beat
+    # Start at bar 0 with silence
+    if i_bar < 8:
+        pass
+    # Begin with a one bar drum intro at bar 8
+    elif i_bar == 8:
+        dr_08()
+    # Start drum loop at bar 9
+    elif i_bar == 9:
+        dr_group.stop()
+        p5 >> play("_", amp=0.3).every(4, "drum_loop", var.counter, var.track_counter)
+    # Start piano at bar 11
+    elif i_bar == 11:
+        piano_rhythm()
+    # Start Nyabinghi at bar 14
+    elif i_bar == 14:
+        nyabinghi_rhythm()
+    else:
+        i_bar = increase_bar(i_bar, 1)
+        if i_bar[0] > number_of_song_measures:
+            clock.clear()
+            return
+    i_bar, i_beat = increase_bar(i_bar, 1)
+    print(i_bar)
+    Clock.future(4, song_init, args=([i_bar]))
+
+clock.clear()
+
+song_init(0)
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
 
 # _______________________________________________________________________________________________________
 # start playing
@@ -320,6 +412,9 @@ p3 >> play("_").every(4, "lead_loop", 0)
 p4 >> play("_").every(4, "bass_loop", var.counter1)
 p5 >> play("_", amp=0.3).every(4, "drum_loop", var.counter, var.track_counter)
 p6 >> play("_", amp=0.3).every(4, "drum_loop_2", var.track_counter)
+p7 >> play("_", amp=0.3).every(4, "amp_list_loop", amp_list01, 1)
+p7.stop()
+p8 >> play("_", amp=0.3).every(4, "amp_list_loop", amp_list02, 2)
 # counter_loop_info >> play("_").every(4, "counter_info")
 
 # dr_00()
@@ -432,7 +527,11 @@ p4.never("bass")
 
 p5.never("drum")
 
+p6.never("drum_loop_2")
 
+p7.never("amp_list_loop")
+
+p7.never("amp_list_loop")
 # _______________________________________________________________________________________________________
 # only playing
 # _______________________________________________________________________________________________________

@@ -339,80 +339,61 @@ amp_list02_var = Pvar(amp_list02, 4)
 dr_random_02(amp_list02[1])    
 
 # _______________________________________________________________________________________________________
-# start playing according to a planned scedule
+# start playing according to a planned schedule
 # _______________________________________________________________________________________________________
 csr()
 number_of_song_measures = 128
-def song_init(init_time)
-
-def song_measure_info(song_measure):
-    song_measure += 1
-    print(f"{Clock.now()}   {song_measure_count}   {song_measure}")
-    return song_measure
-
-song_measure_count = var(list(range(0, number_of_song_measures)))
-# var.song_measure_count = 0
-# Clock.set_time(0)
-song_measure = 0
-# s1 >> play().every(4, "song_measure_info", song_measure)
-song_measure = song_measure_info(song_measure)
-
-# Start at bar 0 with silence
-testvar = 0
-# Begin with a one bar drum intro at bar 8
-@nextBar
-def start_time():
-    print(testvar)
-    print(Clock.now())
-    print(Clock.bars())
-    print(Clock.beat_dur())
-    print(Clock.beats_to_seconds(1))
-    print(Clock.seconds_to_beats(1))
-    print(Clock.get_time_at_beat(0))
-    print(())
-    print(())
-    
-def pluck_a_note(note_x="x"):
-    p1 >> play(note_x,dur=4)
-    
-pluck_a_note("b")
-pluck_a_note("c")
-pluck_a_note("d")
-pluck_a_note("e")
-pluck_a_note("f")
-pluck_a_note("g")
-pluck_a_note("h")
 
 notes_to_play = ("xabcdefghij")
 
 
-for i in range(0,10):
-    t = Clock.get_time_at_beat(i)
-    print(t)
-    y = Clock.now()
-    z = i * y
-    w = t + z
-    print(Clock.now(), z , w)
-    print(nextbar, notes_to_play[i])
-    Clock.schedule(pluck_a_note, Clock.now()+i*4, notes_to_play[i])
+def pluck_a_note(note_x="x"):
+    p1 >> play(note_x, dur=4)
 
-Clock.schedule(pluck_a_note, Clock.now()+Clock.bars(2), notes_to_play[2])
-Clock.schedule(pluck_a_note, Clock.now()+Clock.bars(4), notes_to_play[9])
 
-a = var([0,4,5,3], 4)
-# b1 >> bass(a, dur=PDur(3,8)) + var([0,1],[3,1])   
-b = a + var([0,10],8) 
-print(int(Clock.now()), (a, b))
+def song_init(i_bar):
+    def increase_bar(k_bar, j_increment):
+        if isinstance(k_bar, tuple):
+            j_bar = k_bar[0]
+        else:
+            j_bar = k_bar   
+        j_bar += j_increment
+        j_beat = j_bar + j_increment * Clock.bars()
+        return j_bar, j_beat
+    # Start at bar 0 with silence
+    if i_bar < 8:
+        pass
+    # Begin with a one bar drum intro at bar 8
+    elif i_bar == 8:
+        dr_08()
+    # Start drum loop at bar 9
+    elif i_bar == 9:
+        dr_group.stop()
+        p5 >> play("_", amp=0.3).every(4, "drum_loop", var.counter, var.track_counter)
+    # Start piano at bar 11
+    elif i_bar == 11:
+        piano_rhythm()
+    # Start Nyabinghi at bar 14
+    elif i_bar == 14:
+        nyabinghi_rhythm()
+    else:
+        i_bar = increase_bar(i_bar, 1)
+        if i_bar[0] > number_of_song_measures:
+            clock.clear()
+            return
+    i_bar, i_beat = increase_bar(i_bar, 1)
+    print(i_bar)
+    Clock.future(4, song_init, args=([i_bar]))
 
-# Updating the values of one 'var' will update it everywhere else
-a.update([1,4], 8)
+Clock.clear()
 
-print(int(Clock.now()), (a, b))
-# Start drum loop at bar 9
+song_init(0)
 
-# Start piano at bar 11
 
-# Start Nyabinghi at bar 12
+
+
+
+
  
 
 

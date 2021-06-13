@@ -32,7 +32,7 @@ def csr(bpm=140, scale="chromatic",root="C"):
     return
 
 # _______________________________________________________________________________________________________
-# start playing according to a planned scedule
+# start playing according to a planned schedule
 # _______________________________________________________________________________________________________
 csr()
 number_of_song_measures = 128
@@ -42,39 +42,18 @@ notes_to_play = ("xabcdefghij")
 def pluck_a_note(note_x="x"):
     p1 >> play(note_x,dur=4)
 
-def song_init(init_time=Clock.now()):
-    for i in range(0,10):
+def song_init(init_time, i):
+    if i < 10:
+        i += 1
         x_time = init_time+i*4
-        print(i, x_time)
-        Clock.schedule(pluck_a_note, [Clock.now()+4], notes_to_play[i])
-
-song_init(Clock.now())
-
-Clock.set_time(6)
-Clock.schedule(pluck_a_note, Clock.now()+4, notes_to_play[0])
-print(Clock.now()+4)
-
-def update(n=[0], symb="x"):
-    print(n)
-    if n[0] < 10:
-        pluck_a_note(symb)
+        pluck_a_note(notes_to_play[i])
+        print(i, notes_to_play[i], x_time)
     else:
         p1.stop()
-        return
-    # Clock.future(4, update, [n + 1], notes_to_play[i])  
-    n[0] += 1
-    print(n)  
-    Clock.future(1, update, n[0])
+        return    
+    # Clock.schedule(song_init, beat=Clock.now() + 4, args=(init_time, i))
+    Clock.future(4, song_init, args=(init_time, i))
 
-update()  
-
-Clock.future(1, update, [1])
-
-def update1(n=0):
-    print(n)
-    d1 >> play("x ")
+song_init(0, 0)
 
 
-Clock.future(1, update1, [3])
-
-update1()
