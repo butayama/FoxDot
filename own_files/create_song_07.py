@@ -340,7 +340,8 @@ def drum_intro_00(self):
               
 @PlayerMethod
 def drum_intro_08(self):
-    dr_08()                 
+    dr_08()   
+    Clock.future(4, drum_intro_00, self)              
 
 amp_list02_var = Pvar(amp_list02, 4) 
 # print(amp_list02_var)
@@ -370,14 +371,19 @@ def song_init(i_bar):
         j_beat = j_bar + j_increment * Clock.bars()
         return j_bar, j_beat
     # Start with silence set Clock tempo, scale and root note
-    if i_bar < 2:
+    if i_bar < 1:
         csr()
+        # pd.never("drumdrum_intro_08")
+        # pd.stop()
+        # dr_group.stop()
     elif i_bar == 2:
         # pd >> play("_", amp=0.3, start=now).every(4, "drum_intro_08")
-        pd >> play("_", amp=0.3).every(4, "drum_intro_08")
-    elif i_bar == 3:
+        pd >> play("_", amp=0.3).every(1, "drum_intro_08")
+    elif i_bar == 4:
         p5 >> play("_", amp=0.3).every(4, "drum_loop", var.counter, var.track_counter)
-        pd >> play("_", amp=0.3).every(4, "drum_intro_00")
+        # pd.never("drumdrum_intro_08")
+        pd.stop()
+        dr_group.stop()
     elif i_bar == 8:
         p3 >> play("_").every(4, "lead_loop", 0) 
     elif i_bar == 12:
@@ -388,23 +394,19 @@ def song_init(i_bar):
         p4 >> play("_").every(4, "bass_loop", var.counter1)   
     elif i_bar == 23:
         nyabinghi_group.only()
-        dr_08()           
     elif i_bar == 24:
-        dr_group.stop() 
-        nyabinghi_rhythm()
+        pd >> play("_", amp=0.3).every(1, "drum_intro_08") 
     elif i_bar == 26:
         piano_rhythm()    
     else:
-        if i_bar > 12:
+        if i_bar > 30:
             Clock.clear()
             return
     i_bar, i_beat = increase_bar(i_bar, 1)
     print(i_bar, Clock.now() + i_bar)
     # Clock.future(4, song_init, args=([i_bar]))
     Clock.schedule(song_init, Clock.now() + i_bar, args=([i_bar]))
-
 Clock.clear()
-
 # Clock.set_time(0)
 song_init(0)
 

@@ -377,35 +377,32 @@ def song_init(i_bar):
         # dr_group.stop()
     elif i_bar == 2:
         # pd >> play("_", amp=0.3, start=now).every(4, "drum_intro_08")
-        pd >> play("_", amp=0.3).every(4, "drum_intro_08")
-        p5 >> play("_", amp=0.3).every(4, "drum_loop", var.counter, var.track_counter)
+        pd >> play("_", amp=0.3).every(1, "drum_intro_08")
     elif i_bar == 4:
+        # p5 >> play("_", amp=0.3).every(4, "drum_loop", var.counter, var.track_counter)
         # pd.never("drumdrum_intro_08")
         pd.stop()
         dr_group.stop()
-    elif i_bar == 6:
-        p3 >> play("_").every(4, "lead_loop", 0) 
     elif i_bar == 8:
-        piano_rhythm()
-    elif i_bar == 10:
-        nyabinghi_rhythm()
+        p3 >> play("_").every(4, "lead_loop", 0) 
     elif i_bar == 12:
-        p4 >> play("_").every(4, "bass_loop", var.counter1)   
-    elif i_bar == 14:
-        nyabinghi_group.only()
-    elif i_bar == 15:
-        pd >> play("_", amp=0.3).every(4, "drum_intro_08") 
-        p5 >> play("_", amp=0.3).every(4, "drum_loop", var.counter, var.track_counter)        
+        piano_rhythm()
     elif i_bar == 16:
+        nyabinghi_rhythm()
+    elif i_bar == 20:
+        p4 >> play("_").every(4, "bass_loop", var.counter1)   
+    elif i_bar == 23:
+        nyabinghi_group.only()
+    elif i_bar == 24:
+        pd >> play("_", amp=0.3).every(1, "drum_intro_08") 
+    elif i_bar == 26:
         pd.stop()
         dr_group.stop()  
         piano_rhythm()  
-    elif i_bar == 16:    
-        p3 >> play("_").every(4, "lead_loop", 0) 
-    elif i_bar == 18:    
+    elif i_bar == 28:    
         p4 >> play("_").every(4, "bass_loop", var.counter1)
     else:
-        if i_bar > 20:
+        if i_bar > 30:
             Clock.clear()
             return
     i_bar, i_beat = increase_bar(i_bar, 1)
@@ -413,7 +410,7 @@ def song_init(i_bar):
     # Clock.future(4, song_init, args=([i_bar]))
     Clock.schedule(song_init, Clock.now() + i_bar, args=([i_bar]))
 Clock.clear()
-
+# Clock.set_time(0)
 song_init(0)
 
 piano_rhythm()
