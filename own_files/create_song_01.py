@@ -16,7 +16,7 @@ if h == "DESKTOP-0AVFOFJ":
     with open(r'E:\GitHub\FoxDot\own_files\amp_list_dr_random_01.py') as f: exec(f.read())
     with open(r'E:\GitHub\FoxDot\own_files\amp_list_dr_random_02.py') as f: exec(f.read())
 # Debian - akoya:
-elif h == "akoya":    
+elif h == "akoya-buster":    
     with open(r'/home/uwe/PycharmProjects/FoxDot/own_files/nyabinghi.py') as f: exec(f.read())
     with open(r'/home/uwe/PycharmProjects/FoxDot/own_files/amp_list_dr_random_01.py') as f: exec(f.read())
     with open(r'/home/uwe/PycharmProjects/FoxDot/own_files/amp_list_dr_random_02.py') as f: exec(f.read())
@@ -352,41 +352,55 @@ def pluck_a_note(note_x="x"):
 
 
 def song_init(i_bar):
-    def increase_bar(j_bar, j_increment):
+    def increase_bar(k_bar, j_increment):
+        if isinstance(k_bar, tuple):
+            j_bar = k_bar[0]
+        else:
+            j_bar = k_bar   
+        print(f"j_bar = {j_bar}")
         j_bar += j_increment
         j_beat = j_bar + j_increment * Clock.bars()
         return j_bar, j_beat
-    # Start at bar 0 with silence
-    if i_bar < 8:
-        pass
-    # Begin with a one bar drum intro at bar 8
-    elif i_bar == 8:
-        dr_08()
-    # Start drum loop at bar 9
-    elif i_bar == 9:
+    # Start with silence set Clock tempo, scale and root note
+    if i_bar < 2:
+        csr()
+    # Begin with a one bar drum intro
+    elif i_bar == 2:
+        piano_rhythm()
+    # Start drum loop
+    elif i_bar == 3:
         dr_group.stop()
         p5 >> play("_", amp=0.3).every(4, "drum_loop", var.counter, var.track_counter)
-    # Start piano at bar 11
-    elif i_bar == 11:
-        piano_rhythm()
-    # Start Nyabinghi at bar 14
-    elif i_bar == 14:
+    # Start piano 
+    elif i_bar == 5:
+        dr_08()
+    # Start Nyabinghi
+    elif i_bar == 12:
         nyabinghi_rhythm()
+    elif i_bar == 16:
+        p3 >> play("_").every(4, "lead_loop", 0)     
+    elif i_bar == 21:
+        p4 >> play("_").every(4, "bass_loop", var.counter1)        
+     
+    
+     
     else:
-        i_bar = increase_bar(i_bar, 1)
-        if i_bar[0] > number_of_song_measures:
-            clock.clear
+        # i_bar = increase_bar(i_bar, 1)
+        # Stop song
+        if i_bar[0] > 28:
+            Clock.clear()
             return
     i_bar, i_beat = increase_bar(i_bar, 1)
     print(i_bar)
     Clock.future(4, song_init, args=([i_bar]))
 
+Clock.clear()
 
 song_init(0)
 
+piano_rhythm()
 
-
-
+p4 >> play("_").every(4, "bass_loop", var.counter1) 
 
 
  

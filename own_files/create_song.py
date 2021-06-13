@@ -16,7 +16,7 @@ if h == "DESKTOP-0AVFOFJ":
     with open(r'E:\GitHub\FoxDot\own_files\amp_list_dr_random_01.py') as f: exec(f.read())
     with open(r'E:\GitHub\FoxDot\own_files\amp_list_dr_random_02.py') as f: exec(f.read())
 # Debian - akoya:
-elif h == "akoya":    
+elif h == "akoya-buster":    
     with open(r'/home/uwe/PycharmProjects/FoxDot/own_files/nyabinghi.py') as f: exec(f.read())
     with open(r'/home/uwe/PycharmProjects/FoxDot/own_files/amp_list_dr_random_01.py') as f: exec(f.read())
     with open(r'/home/uwe/PycharmProjects/FoxDot/own_files/amp_list_dr_random_02.py') as f: exec(f.read())
@@ -126,7 +126,7 @@ def dr_08():
     hh_close >> play("-", dur=0.25, sample=(0), pan=0.45, room=0.7, verb=0.7, sus=3, amp=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
     hh_open >> play("=", dur=0.25, sample=(1), pan=0.45, room=0.7, verb=0.7, sus=3, amp=[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
     crash_02 >> play("#", dur=0.25, sample=(3), pan=0.45, room=0.7, verb=0.7, sus=3, amp=[0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0])
-
+    return
 
 def dr_16():
     bassdrum >> play("X", dur=0.25, sample=(1), pan=0.4, room=0.7, verb=0.7, sus=3, amp=[1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0])
@@ -332,7 +332,15 @@ def amp_list_loop(self, amp_list = amp_list01, list_nr = 1):
     if list_nr == 1:
         dr_random_01(amp_list[int(list_01_counter)])
     elif list_nr == 2:
-        dr_random_02(amp_list[int(list_02_counter)])        
+        dr_random_02(amp_list[int(list_02_counter)])   
+
+@PlayerMethod
+def drum_intro_00(self):
+    dr_00()      
+              
+@PlayerMethod
+def drum_intro_08(self):
+    dr_08()                 
 
 amp_list02_var = Pvar(amp_list02, 4) 
 # print(amp_list02_var)
@@ -357,29 +365,37 @@ def song_init(i_bar):
             j_bar = k_bar[0]
         else:
             j_bar = k_bar   
+        # print(f"j_bar = {j_bar}")
         j_bar += j_increment
         j_beat = j_bar + j_increment * Clock.bars()
         return j_bar, j_beat
-    # Start at bar 0 with silence
-    if i_bar < 2:
-        pass
-    # Begin with a one bar drum intro at bar 8
-    elif i_bar == 2:
-        dr_08()
-    # Start drum loop at bar 9
-    elif i_bar == 3:
-        dr_group.stop()
-        p5 >> play("_", amp=0.3).every(4, "drum_loop", var.counter, var.track_counter)
-    # Start piano at bar 11
+    # Start with silence set Clock tempo, scale and root note
+    if i_bar < 4:
+        csr()
+    elif i_bar == 4:
+        pd >> play("_", amp=0.3, start=now).every(4, "drum_intro_08")
     elif i_bar == 5:
-        piano_rhythm()
-    # Start Nyabinghi at bar 14
+        p5 >> play("_", amp=0.3).every(4, "drum_loop", var.counter, var.track_counter)
+        pd >> play("_", amp=0.3).every(4, "drum_intro_00")
     elif i_bar == 8:
+        p3 >> play("_").every(4, "lead_loop", 0) 
+    elif i_bar == 12:
+        piano_rhythm()
+    elif i_bar == 16:
         nyabinghi_rhythm()
+    elif i_bar == 20:
+        p4 >> play("_").every(4, "bass_loop", var.counter1)   
+    elif i_bar == 23:
+        nyabinghi_group.only()
+        dr_08()           
+    elif i_bar == 24:
+        dr_group.stop() 
+        nyabinghi_rhythm()
+    elif i_bar == 26:
+        piano_rhythm()    
     else:
-        i_bar = increase_bar(i_bar, 1)
-        if i_bar[0] > 10:
-            clock.clear()
+        if i_bar > 12:
+            Clock.clear()
             return
     i_bar, i_beat = increase_bar(i_bar, 1)
     print(i_bar)
@@ -387,14 +403,15 @@ def song_init(i_bar):
 
 Clock.clear()
 
+# Clock.set_time(0)
 song_init(0)
 
+piano_rhythm()
 
+p4 >> play("_").every(4, "bass_loop", var.counter1) 
 
-
-
-
- 
+dr_08()
+dr_group.stop() 
 
 
 
